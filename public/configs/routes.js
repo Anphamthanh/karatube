@@ -7,5 +7,5 @@ tubeKaraApp
       templateUrl: 'main.html',
       controller: 'MainCtrl'
     })
-    ;
+    .otherwise({redirecTo: '/'});
 }]);
