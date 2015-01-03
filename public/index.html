@@ -7,16 +7,17 @@
   <title>TubeKara</title>
   <meta name="description" content="YouTube Karaoke Made Simple">
   <meta name="author" content="An Pham">
-  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.8/angular.min.js"></script>
+  <script src="//code.jquery.com/jquery-2.1.3.min.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.8/angular.min.js"></script>
   <script src="app.js"></script>
-  <script src="/controllers/controllers.js"></script>
-  <script src="/configs/routes.js"></script>
+  <script src="controllers/controllers.js"></script>
+  <script src="configs/routes.js"></script>
   <link rel="stylesheet" type="text/css" href="assets/stylesheets/front_page.css">
 </head>
 
 <body ng-app="TubeKara">
   <div id="search-form" ng-controller="MainCtrl">
-    <form ng-submit="addSong(song)">
+    <form ng-submit="start(song)">
       <p id="welcome-text">{{ welcome }}</p>
       <input ng-model="song" type="text" name="song" placeholder="Please enter your song">
       <input id="submit-song" type="submit" value="Start Singing!">
