@@ -10,3 +10,12 @@ html {
 #welcome-text {
   color: white;
 }
+
+#song {
+  line-height: 1.5rem;
+  width: 25rem;
+}
+
+#submit-song {
+  height: 2rem;
+}
