@@ -1,0 +1,17 @@
+html { 
+  background: url(/assets/images/cover5.png) no-repeat center center fixed; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  font-family: sans-serif;
+}
+
+/*@font-face { 
+  font-family: Delicious; 
+  src: url('Delicious-Roman.otf'); 
+} */
+
+#welcome-text {
+  color: white;
+}
