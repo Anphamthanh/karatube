@@ -7,10 +7,11 @@
   <title>TubeKara</title>
   <meta name="description" content="YouTube Karaoke Made Simple">
   <meta name="author" content="An Pham">
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.8/angular.min.js"></script>
+  <script src="controllers/app.js"></script>
 </head>
 
-<body>
-
-  <p>You are heere! Almost there!</p>
+<body ng-app="tubeKara" ng-controller="MainCtrl">
+  <div>{{ welcome }}</div>
 </body>
 </html>
