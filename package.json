@@ -1,5 +1,7 @@
 {
   "name": "tube-kara",
+  "author": "An Pham",
+  "website": "http://www.apresume.com",
   "version": "0.1.0",
   "description": "YouTube Karaoke App",
   "main": "index.js",
