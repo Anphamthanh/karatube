@@ -5,6 +5,33 @@ html {
   -o-background-size: cover;
   background-size: cover;
   font-family: sans-serif;
+  padding: 0;
+  margin: 0;
+  height: 100%;
+}
+
+#user-control {
+  border: 1px solid blue;
+  float: right;
+  width: 30%;
+}
+
+#player-frame {
+  border: 1px solid red;
+  width: 68%;
+  float: left;
+}
+
+#footer {
+  margin-top: 1rem;
+}
+
+#main-wrapper {
+  margin-bottom: 1rem;
+}
+
+.hidden {
+  display: none;
 }
 
 #welcome-text {
@@ -19,3 +46,4 @@ html {
 #submit-song {
   height: 2rem;
 }
+

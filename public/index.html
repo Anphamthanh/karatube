@@ -4,8 +4,8 @@
 <head>
   <meta charset="utf-8">
 
-  <title>TubeKara</title>
-  <meta name="description" content="YouTube Karaoke Made Simple">
+  <title>TubeKara - YouTube Karaoke made easy</title>
+  <meta name="description" content="YouTube Karaoke Made Easy">
   <meta name="author" content="An Pham">
   <script src="//code.jquery.com/jquery-2.1.3.min.js"></script>
   <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.8/angular.min.js"></script>
@@ -23,6 +23,13 @@
       <input id="submit-song" type="submit" value="Start Singing!">
     </form>
   </div>
+  <div id="main-wrapper">
+    <div id="player-frame" class="hidden"></div>
+    <div id="user-control" class="hidden"></div>
+  </div>
+  <footer id="footer">
+    <p>Developed by <a href="http://www.apresume.com">An Pham</a>. All rights reserved.</p>
+  </footer>
   <script>
     $("#song").focus();
   </script>
