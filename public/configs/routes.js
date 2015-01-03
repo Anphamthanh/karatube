@@ -1,11 +1,10 @@
-var tubeKaraApp = angular.module('TubeKara', []);
 
-tubeKaraApp
-.config(['$routeProvider', function($routeProvider) {
-  $routeProvider
-    .when('/', {
-      templateUrl: 'main.html',
-      controller: 'MainCtrl'
-    })
-    .otherwise({redirecTo: '/'});
-}]);
+// tubeKaraApp
+// .config(['$routeProvider', function($routeProvider) {
+//   $routeProvider
+//     .when('/', {
+//       templateUrl: '/views/templates/_main.html',
+//       controller: 'MainCtrl'
+//     })
+//     .otherwise({redirectTo: '/'});
+// }]);

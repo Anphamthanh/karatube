@@ -1,4 +1,3 @@
-var tubeKaraApp = angular.module('TubeKara', []);
 
 tubeKaraApp
 .controller('MainCtrl', ['$scope', function($scope) {

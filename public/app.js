@@ -1,0 +1,1 @@
+var tubeKaraApp = angular.module('TubeKara', []);

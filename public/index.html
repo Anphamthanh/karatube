@@ -1,6 +1,6 @@
 <!doctype html>
 
-<html lang="en" ng-app="TubeKara">
+<html lang="en">
 <head>
   <meta charset="utf-8">
 
@@ -8,19 +8,19 @@
   <meta name="description" content="YouTube Karaoke Made Simple">
   <meta name="author" content="An Pham">
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.8/angular.min.js"></script>
-  <script src="configs/routes.js"></script>
-  <script src="controllers/controllers.js"></script>
+  <script src="app.js"></script>
+  <script src="/controllers/controllers.js"></script>
+  <script src="/configs/routes.js"></script>
   <link rel="stylesheet" type="text/css" href="assets/stylesheets/front_page.css">
 </head>
 
-<body ng-controller="MainCtrl">
-  <div id="search-form">
+<body ng-app="TubeKara">
+  <div id="search-form" ng-controller="MainCtrl">
     <form action="/list/song" method="post">
       <p id="welcome-text">{{ welcome }}</p>
       <input type="text" name="song" placeholder="Please enter your song">
       <input id="submit-song" type="submit" value="Start Singing!">
     </form>
-    </div>
   </div>
 </body>
 </html>
