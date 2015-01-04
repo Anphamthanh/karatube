@@ -12,25 +12,30 @@ html {
 
 #user-control {
   border: 1px solid blue;
-  float: right;
   width: 20%;
+  position: absolute;
+  top: 4rem;
+  right: 0;
   box-sizing: border-box;
+  background-color: white;
 }
 
 #player-frame {
   border: 1px solid red;
-  width: 80%;
-  float: left;
+  width: 99%;
+  position: absolute;
+  top: 4rem;
+  left: 0;
   box-sizing: border-box;
 }
 
 #footer {
-  clear: both;
-  margin-top: 1rem;
+  position: absolute;
+  right: 2rem;
+  bottom: 2rem;
 }
 
 #main-wrapper {
-  margin-bottom: 1rem;
 }
 
 .hidden {

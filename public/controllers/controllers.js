@@ -6,7 +6,7 @@ tubeKaraApp
 
     $scope.start = function(song) {
       $scope.list = [song];
-      height = $("html").height()*0.9;
+      height = $("html").height()*0.85;
       $("html").css('background-image', 'none');
       $("#search-form").remove();
       $("#player-frame").removeClass("hidden");
