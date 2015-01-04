@@ -13,16 +13,19 @@ html {
 #user-control {
   border: 1px solid blue;
   float: right;
-  width: 30%;
+  width: 20%;
+  box-sizing: border-box;
 }
 
 #player-frame {
   border: 1px solid red;
-  width: 68%;
+  width: 80%;
   float: left;
+  box-sizing: border-box;
 }
 
 #footer {
+  clear: both;
   margin-top: 1rem;
 }
 

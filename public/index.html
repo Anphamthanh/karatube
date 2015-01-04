@@ -32,6 +32,14 @@
   </footer>
   <script>
     $("#song").focus();
+    $("#user-control").mouseenter(function() {
+      $("#user-control").css("width", "20%");
+      $("#player-frame").css("width", "80%");
+    });
+    $("#user-control").mouseleave(function() {
+      $("#user-control").css("width", "1%");
+      $("#player-frame").css("width", "99%");
+    });
   </script>
 </body>
 </html>
