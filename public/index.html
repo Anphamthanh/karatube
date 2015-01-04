@@ -16,9 +16,9 @@
 </head>
 
 <body ng-app="TubeKara">
+  <p id="welcome-text" ng-controller="MainCtrl">{{ welcome }}</p>
   <div id="search-form" ng-controller="MainCtrl">
     <form ng-submit="start(song)">
-      <p id="welcome-text">{{ welcome }}</p>
       <input ng-model="song" type="text" name="song" id="song" placeholder="Please enter your song">
       <input id="submit-song" type="submit" value="Start Singing!">
     </form>

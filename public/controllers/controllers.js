@@ -13,6 +13,7 @@ tubeKaraApp
       $("#player-frame").css("height", height);
       $("#user-control").removeClass("hidden");
       $("#user-control").css("height", height);
+      $("#welcome-text").css("color", "black");
       console.log($scope.list);
     }
 }]);
