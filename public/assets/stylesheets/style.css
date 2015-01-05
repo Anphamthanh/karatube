@@ -11,7 +11,7 @@ html {
 }
 
 body {  
-  color: #95B5C2;
+  color: #50EBD2;
 }
 
 .stripesDarkBackground {
@@ -56,7 +56,7 @@ body {
 }
 
 #footer a, #footer a:visited {
-  color: #95B5C2;
+  color: #50EBD2;
 }
 
 #main-wrapper {
@@ -83,6 +83,7 @@ body {
 #startSongInput {
   line-height: 1.5rem;
   width: 25rem;
+  margin-left: 1rem;
 }
 
 #newSongInput {

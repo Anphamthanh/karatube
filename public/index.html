@@ -8,19 +8,21 @@
   <meta name="description" content="YouTube Karaoke Made Easy">
   <meta name="author" content="An Pham">
   <script src="//code.jquery.com/jquery-2.1.3.min.js"></script>
+  <script src="//code.jquery.com/ui/1.11.2/jquery-ui.min.js"></script>
   <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.8/angular.min.js"></script>
   <script src="app.js"></script>
   <script src="controllers/controllers.js"></script>
-  <script src="configs/routes.js"></script>
-  <link rel="stylesheet" type="text/css" href="assets/stylesheets/style.css">
+  <script src="configs/routes.js"></script> 
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.min.css">
   <link rel="stylesheet" type="text/css" href="assets/stylesheets/font-awesome.min.css">
+  <link rel="stylesheet" type="text/css" href="assets/stylesheets/style.css">
 </head>
 
 <body ng-app="TubeKara">
   <p id="welcome-text" ng-controller="MainCtrl">{{ welcome }}</p>
   <div id="search-form" ng-controller="MainCtrl">
     <form ng-submit="start(startSong)">
-      <input ng-model="startSong" type="text" class="live-search-box" id="startSongInput" placeholder="Please enter your song">
+      <input ng-model="startSong" type="text" class="live-search-box" id="startSongInput" autocomplete="off" placeholder="Please enter your song">
       <input id="submit-song" type="submit" value="Start Singing!">
     </form>
   </div>
@@ -29,7 +31,7 @@
     <div id="user-control" class="hidden">
       <div id="control-wrapper">
         <div id="control-title">Play List</div>       
-        <input ng-model="newSongInput" type="text" id="newSongInput" placeholder="Please add your next song">
+        <input ng-model="newSongInput" type="text" class="live-search-box" id="newSongInput" placeholder="Please add your next song">
         <i class="btn fa fa-plus fa-2x"></i>
       </div>
     </div>
@@ -38,7 +40,7 @@
     <p>Developed by <a target="_blank" href="http://www.apresume.com">An Pham</a>. All rights reserved.</p>
   </footer>
   <script>
-    $("#song").focus();
+    $("#startSongInput").focus();
     $("#user-control").mouseenter(function() {
       $("#user-control").css("width", "20%");
       $("#control-wrapper").removeClass("hidden");
@@ -60,16 +62,22 @@
         dataType:"jsonp",
         success: function(response)
         {
-
           if(response.data.items)
           {
-            $.each(response.data.items, function(i,data)
-            {
-              var videoId=data.id;
-              var videoTitle=data.title;
-              var videoViewCount=data.viewCount;
-              console.log(videoTitle);
-            });
+            firstVideo = response.data.items[0];
+            videoTitles = $.map(response.data.items, function(o) { return o.title; })
+            videoIds = $.map(response.data.items, function(o) { return o.id; })
+            $(".live-search-box").autocomplete({ source: videoTitles });
+            console.log(firstVideo.title);
+            console.log(videoTitles);
+            console.log(videoIds);
+            // $.each(response.data.items, function(i,data)
+            // {
+            //   var videoId=data.id;
+            //   var videoTitle=data.title;
+            //   var videoViewCount=data.viewCount;
+            //   // console.log(videoTitle);
+            // });
           }
           else
           {
