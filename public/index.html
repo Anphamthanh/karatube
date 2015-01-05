@@ -51,7 +51,7 @@
     $(".live-search-box").keyup(function() {
       var searchInput = $(this).val();
       var keyword= encodeURIComponent(searchInput);
-      var ytURL='http://gdata.youtube.com/feeds/api/videos?q='+keyword+'&max-results=7&v=2&alt=jsonc';
+      var ytURL='//gdata.youtube.com/feeds/api/videos?q='+keyword+'&max-results=7&v=2&alt=jsonc';
 
       $.ajax
       ({
