@@ -27,7 +27,7 @@ tubeKaraApp
     }
 
     $scope.videoInit = function(playerDiv, videoId) {
-      $("#" + playerDiv)[0].src += "&autoplay=1";
+      // $("#" + playerDiv)[0].src += "&autoplay=1";
     }
 
 }]);

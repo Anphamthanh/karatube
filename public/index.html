@@ -13,19 +13,26 @@
   <script src="controllers/controllers.js"></script>
   <script src="configs/routes.js"></script>
   <link rel="stylesheet" type="text/css" href="assets/stylesheets/style.css">
+  <link rel="stylesheet" type="text/css" href="assets/stylesheets/font-awesome.min.css">
 </head>
 
 <body ng-app="TubeKara">
   <p id="welcome-text" ng-controller="MainCtrl">{{ welcome }}</p>
   <div id="search-form" ng-controller="MainCtrl">
-    <form ng-submit="start(song)">
-      <input ng-model="song" type="text" name="song" id="song" placeholder="Please enter your song">
+    <form ng-submit="start(startSong)">
+      <input ng-model="startSong" type="text" id="startSong" placeholder="Please enter your song">
       <input id="submit-song" type="submit" value="Start Singing!">
     </form>
   </div>
   <div id="main-wrapper">
     <iframe id="player-frame" class="hidden" frameborder="0" allowfullscreen="1" title="YouTube video player" src="https://www.youtube.com/embed/VwtAPeh4GOU?enablejsapi=1&origin=https%3A%2F%2Ftubekara.herokuapp.com"></iframe>
-    <div id="user-control" class="hidden"></div>
+    <div id="user-control" class="hidden">
+      <div id="control-wrapper">
+        <div id="control-title">Play List</div>       
+        <input ng-model="newSong" type="text" id="newSong" placeholder="Please add your next song">
+        <i class="btn fa fa-plus fa-2x"></i>
+      </div>
+    </div>
   </div>
   <footer id="footer">
     <p>Developed by <a target="_blank" href="http://www.apresume.com">An Pham</a>. All rights reserved.</p>
@@ -34,9 +41,11 @@
     $("#song").focus();
     $("#user-control").mouseenter(function() {
       $("#user-control").css("width", "20%");
+      $("#control-wrapper").removeClass("hidden");
     });
     $("#user-control").mouseleave(function() {
       $("#user-control").css("width", "1%");
+      $("#control-wrapper").addClass("hidden");
     });
   </script>
 </body>
