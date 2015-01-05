@@ -4,15 +4,15 @@
 <head>
   <meta charset="utf-8">
 
-  <title>TubeKara - YouTube Karaoke made easy</title>
+  <title>TubeKara - YouTube Karaoke Made Easy</title>
   <meta name="description" content="YouTube Karaoke Made Easy">
   <meta name="author" content="An Pham">
-  <script src="//code.jquery.com/jquery-2.1.3.min.js"></script>
-  <script src="//code.jquery.com/ui/1.11.2/jquery-ui.min.js"></script>
+  <script src="//code.jquery.com/jquery-2.1.3.min.js"></script> 
   <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.8/angular.min.js"></script>
+  <script src="//code.jquery.com/ui/1.11.2/jquery-ui.min.js"></script>
   <script src="app.js"></script>
   <script src="controllers/controllers.js"></script>
-  <script src="configs/routes.js"></script> 
+  <script src="configs/routes.js"></script>  
   <link rel="stylesheet" href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.min.css">
   <link rel="stylesheet" type="text/css" href="assets/stylesheets/font-awesome.min.css">
   <link rel="stylesheet" type="text/css" href="assets/stylesheets/style.css">
@@ -54,6 +54,8 @@
       var searchInput = $(this).val();
       var keyword= encodeURIComponent(searchInput);
       var ytURL='//gdata.youtube.com/feeds/api/videos?q='+keyword+'&max-results=7&v=2&alt=jsonc';
+      var id = $(this).attr("id");
+      console.log(id);
 
       $.ajax
       ({
@@ -64,13 +66,11 @@
         {
           if(response.data.items)
           {
-            firstVideo = response.data.items[0];
-            videoTitles = $.map(response.data.items, function(o) { return o.title; })
-            videoIds = $.map(response.data.items, function(o) { return o.id; })
-            $(".live-search-box").autocomplete({ source: videoTitles });
-            console.log(firstVideo.title);
-            console.log(videoTitles);
-            console.log(videoIds);
+            videoTitles = $.map(response.data.items, function(o) { return o.title; });
+            videoIds = $.map(response.data.items, function(o) { return o.id; });
+            $("#"+id).autocomplete({ source: videoTitles });
+            // console.log($("#"+id));
+            // console.log(videoTitles);
             // $.each(response.data.items, function(i,data)
             // {
             //   var videoId=data.id;
