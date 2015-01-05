@@ -3,6 +3,7 @@ tubeKaraApp
 .controller('MainCtrl', ['$scope', function($scope) {
     $scope.welcome = 'Welcome to TubeKara 0.1.0! YouTube Karaoke is now on a different level!...';
     $scope.list = [];
+    $scope.player = {};
 
     $scope.start = function(song) {
       $scope.list = [song];
@@ -14,10 +15,19 @@ tubeKaraApp
       $("#user-control").removeClass("hidden");
       $("#user-control").css("height", height);
       $("body").addClass("stripesDarkBackground");
+      $scope.hideUserControl();
+      $scope.videoInit("player-frame", "M7lc1UVf-VE");
+      console.log($scope.list);
+    }
+
+    $scope.hideUserControl = function() {
       setTimeout(function() {
         $("#user-control").trigger("mouseleave");
       }, 1000);
-      console.log($scope.list);
+    }
+
+    $scope.videoInit = function(playerDiv, videoId) {
+      $("#" + playerDiv)[0].src += "&autoplay=1";
     }
 
 }]);
