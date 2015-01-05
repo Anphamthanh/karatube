@@ -20,7 +20,7 @@
   <p id="welcome-text" ng-controller="MainCtrl">{{ welcome }}</p>
   <div id="search-form" ng-controller="MainCtrl">
     <form ng-submit="start(startSong)">
-      <input ng-model="startSong" type="text" id="startSongInput" placeholder="Please enter your song">
+      <input ng-model="startSong" type="text" class="live-search-box" id="startSongInput" placeholder="Please enter your song">
       <input id="submit-song" type="submit" value="Start Singing!">
     </form>
   </div>
@@ -48,15 +48,15 @@
       $("#control-wrapper").addClass("hidden");
     });
 
-    $("#startSongInput").keyup(function() {
-      var search_input = $(this).val();
-      var keyword= encodeURIComponent(search_input);
-      var yt_url='http://gdata.youtube.com/feeds/api/videos?q='+keyword+'&max-results=7&v=2&alt=jsonc';
+    $(".live-search-box").keyup(function() {
+      var searchInput = $(this).val();
+      var keyword= encodeURIComponent(searchInput);
+      var ytURL='http://gdata.youtube.com/feeds/api/videos?q='+keyword+'&max-results=7&v=2&alt=jsonc';
 
       $.ajax
       ({
         type: "GET",
-        url: yt_url,
+        url: ytURL,
         dataType:"jsonp",
         success: function(response)
         {
@@ -65,10 +65,10 @@
           {
             $.each(response.data.items, function(i,data)
             {
-              var video_id=data.id;
-              var video_title=data.title;
-              var video_viewCount=data.viewCount;
-              console.log(video_title);
+              var videoId=data.id;
+              var videoTitle=data.title;
+              var videoViewCount=data.viewCount;
+              console.log(videoTitle);
             });
           }
           else
