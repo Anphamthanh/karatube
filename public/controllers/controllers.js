@@ -16,4 +16,15 @@ tubeKaraApp
       $("body").addClass("stripesDarkBackground");
       console.log($scope.list);
     }
+
+    $scope.video_init = function(frameId) {
+      var tag = document.createElement('script');
+
+      tag.src = "https://www.youtube.com/iframe_api";
+      var firstScriptTag = document.getElementsByTagName('script')[0];
+      firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+      var player;
+    }
+
 }]);
