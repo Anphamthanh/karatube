@@ -14,17 +14,10 @@ tubeKaraApp
       $("#user-control").removeClass("hidden");
       $("#user-control").css("height", height);
       $("body").addClass("stripesDarkBackground");
+      setTimeout(function() {
+        $("#user-control").trigger("mouseleave");
+      }, 1000);
       console.log($scope.list);
-    }
-
-    $scope.video_init = function(frameId) {
-      var tag = document.createElement('script');
-
-      tag.src = "https://www.youtube.com/iframe_api";
-      var firstScriptTag = document.getElementsByTagName('script')[0];
-      firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-
-      var player;
     }
 
 }]);
