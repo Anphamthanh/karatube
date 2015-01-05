@@ -80,14 +80,15 @@ body {
   font-weight: bold;
 }
 
-#startSong {
+#startSongInput {
   line-height: 1.5rem;
   width: 25rem;
 }
 
-#newSong {
+#newSongInput {
   line-height: 1.5rem;
   width: 17rem;
+  margin-left: 1rem;
 }
 
 #submit-song {

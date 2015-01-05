@@ -20,7 +20,7 @@
   <p id="welcome-text" ng-controller="MainCtrl">{{ welcome }}</p>
   <div id="search-form" ng-controller="MainCtrl">
     <form ng-submit="start(startSong)">
-      <input ng-model="startSong" type="text" id="startSong" placeholder="Please enter your song">
+      <input ng-model="startSong" type="text" id="startSongInput" placeholder="Please enter your song">
       <input id="submit-song" type="submit" value="Start Singing!">
     </form>
   </div>
@@ -29,7 +29,7 @@
     <div id="user-control" class="hidden">
       <div id="control-wrapper">
         <div id="control-title">Play List</div>       
-        <input ng-model="newSong" type="text" id="newSong" placeholder="Please add your next song">
+        <input ng-model="newSongInput" type="text" id="newSongInput" placeholder="Please add your next song">
         <i class="btn fa fa-plus fa-2x"></i>
       </div>
     </div>
@@ -46,6 +46,37 @@
     $("#user-control").mouseleave(function() {
       $("#user-control").css("width", "1%");
       $("#control-wrapper").addClass("hidden");
+    });
+
+    $("#startSongInput").keyup(function() {
+      var search_input = $(this).val();
+      var keyword= encodeURIComponent(search_input);
+      var yt_url='http://gdata.youtube.com/feeds/api/videos?q='+keyword+'&max-results=7&v=2&alt=jsonc';
+
+      $.ajax
+      ({
+        type: "GET",
+        url: yt_url,
+        dataType:"jsonp",
+        success: function(response)
+        {
+
+          if(response.data.items)
+          {
+            $.each(response.data.items, function(i,data)
+            {
+              var video_id=data.id;
+              var video_title=data.title;
+              var video_viewCount=data.viewCount;
+              console.log(video_title);
+            });
+          }
+          else
+          {
+            console.log("No result found!");
+          }
+        }
+      });
     });
   </script>
 </body>
