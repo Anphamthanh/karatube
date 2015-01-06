@@ -81,7 +81,13 @@
                 "</li><br />"
                 );
             });
+
             $(".suggestion-item").first().addClass("selected");
+            $(".suggestion-item").hover(function() {
+              $(this).addClass("selected");
+            }, function() {
+              $(this).removeClass("selected")
+            });
           }
           else
           {
@@ -90,6 +96,12 @@
         }
       });
     });
+
+    function updateVideoID(id) {
+      $("#player-frame").attr("src", "https://www.youtube.com/embed/"+
+          id+
+          "?enablejsapi=1&origin=https%3A%2F%2Ftubekara.herokuapp.com");
+    }
   </script>
 </body>
 </html>

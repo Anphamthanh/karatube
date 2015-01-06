@@ -100,7 +100,6 @@ body {
 }
 
 .selected {
-  display: inline-block;
   background:rgba(0,0,0,0.2);
   border-radius: 3px;
 }
@@ -125,12 +124,9 @@ body {
   border-radius: 3px;
 }
 
-.suggestion li:hover {
-  cursor: pointer;
-}
-
 .suggestion-item {
   vertical-align: text-top;
+  cursor: pointer;
 }
 
 .suggestion-title {
