@@ -82,7 +82,7 @@ body {
 
 #startSongInput {
   line-height: 1.5rem;
-  width: 25rem;
+  width: 30rem;
   margin-left: 1rem;
 }
 
@@ -90,10 +90,6 @@ body {
   line-height: 1.5rem;
   width: 17rem;
   margin-left: 1rem;
-}
-
-#submit-song {
-  height: 2rem;
 }
 
 .dark {
