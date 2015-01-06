@@ -57,12 +57,12 @@
       
       if (key == 13) {
         if ($(".selected").length != 0) {
-          updateVideoID($(".selected").data('id'));
+          updateVideoID($(".selected").first().data('id'));
         }
         else {
           updateVideoID($(".suggestion-item").first().data('id'));
-          
         }
+        openPlayingPage();
         return;
       }
 
@@ -93,6 +93,7 @@
             });
             $(".suggestion-item").click(function() {
               updateVideoID($(this).data('id'));
+              openPlayingPage();
             });
           }
           else
@@ -108,6 +109,22 @@
           id+
           "?enablejsapi=1&origin=https%3A%2F%2Ftubekara.herokuapp.com");
     }
+
+    function openPlayingPage() {
+      height = $("html").height()*0.85;
+      $("html").css('background-image', 'none');
+      $("#search-form").remove();
+      $("#player-frame").removeClass("hidden");
+      $("#player-frame").css("height", height);
+      $("#user-control").removeClass("hidden");
+      $("#user-control").css("height", height);
+      $("body").addClass("stripesDarkBackground");
+      setTimeout(function() {
+        $("#user-control").trigger("mouseleave");
+      }, 1000);
+      $("#player-frame")[0].src += "&autoplay=1";
+    }
+
   </script>
 </body>
 </html>
