@@ -111,6 +111,7 @@ body {
 .suggestion {
   list-style-type: none;
   padding-left: 1rem;
+  padding-right: 1rem;
 }
 
 .suggestion li {

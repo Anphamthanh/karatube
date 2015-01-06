@@ -51,46 +51,54 @@
 
     $(".live-search-box").keyup(function(event) {
       var id = $(this).attr("id");
-      var current = $(".suggestion-item").index($(".selected"));
       var key = (event.keyCode ? event.keyCode : event.which);
 
-      if (key == 13) {
-        if ($(".selected").length != 0) {
-          updateVideoID($(".selected").first().data('id'));
-        }
-        else {
-          updateVideoID($(".suggestion-item").first().data('id'));
-        }
-        openPlayingPage();
-        return;
-      }
-
-      if (key == 40) {
-        if (current < $(".suggestion-item").length - 1) {
-          $(".suggestion-item").eq(current).removeClass("selected");
-          $(".suggestion-item").eq(current+1).addClass("selected");
-        }
-        return;
-      }
-
-      if (key == 38) {
-        if (current > 0) {
-          $(".suggestion-item").eq(current).removeClass("selected");
-          $(".suggestion-item").eq(current-1).addClass("selected");
-        }
-        return;
-      }
+      handleKeyInput(key, "startSongInputSuggestion");
 
       var searchInput = $(this).val();
       updateSuggestion(searchInput, 7, "startSongInputSuggestion");
 
     });
 
+    function handleKeyInput(key, suggestionDiv) {      
+      var suggestionDiv = suggestionDiv.indexOf('#') == 0 ? suggestionDiv : ('#'+suggestionDiv);
+      var current = $(suggestionDiv + " .suggestion-item").index($(".selected"));
+      console.log(current);
+
+      if (key == 13) {
+        if ($(suggestionDiv + " .selected").length != 0) {
+          updateVideoID($(suggestionDiv + " .selected").first().data('id'));
+        }
+        else {
+          updateVideoID($(suggestionDiv + " .suggestion-item").first().data('id'));
+        }
+        openPlayingPage();
+        return;
+      }
+
+      // if (key == 40) {
+      //   if (current < $(suggestionDiv + " .suggestion-item").length - 1) {
+      //     $(suggestionDiv + " .suggestion-item").eq(current).removeClass("selected");
+      //     $(suggestionDiv + " .suggestion-item").eq(current+1).addClass("selected");
+      //   }
+      //   return;
+      // }
+
+      // if (key == 38) {
+      //   if (current > 0) {
+      //     $(suggestionDiv + " .suggestion-item").eq(current).removeClass("selected");
+      //     $(suggestionDiv + " .suggestion-item").eq(current-1).addClass("selected");
+      //   }
+      //   return;
+      // }
+
+
+    }
+
     function updateSuggestion(searchInput, maxResult, suggestionDiv) {
       var keyword= encodeURIComponent(searchInput);
       var ytURL='//gdata.youtube.com/feeds/api/videos?q='+keyword+'&max-results='+maxResult+'&v=2&alt=jsonc';
-      suggestionDiv = suggestionDiv.indexOf('#') == 0 ? suggestionDiv : ('#'+suggestionDiv);
-      console.log(suggestionDiv);
+      var suggestionDiv = suggestionDiv.indexOf('#') == 0 ? suggestionDiv : ('#'+suggestionDiv);
 
       $.ajax
       ({
