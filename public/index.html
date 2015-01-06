@@ -50,9 +50,6 @@
     });
 
     $(".live-search-box").keyup(function(event) {
-      var searchInput = $(this).val();
-      var keyword= encodeURIComponent(searchInput);
-      var ytURL='//gdata.youtube.com/feeds/api/videos?q='+keyword+'&max-results=7&v=2&alt=jsonc';
       var id = $(this).attr("id");
       var current = $(".suggestion-item").index($(".selected"));
       var key = (event.keyCode ? event.keyCode : event.which);
@@ -84,6 +81,17 @@
         return;
       }
 
+      var searchInput = $(this).val();
+      updateSuggestion(searchInput, 7, "startSongInputSuggestion");
+
+    });
+
+    function updateSuggestion(searchInput, maxResult, suggestionDiv) {
+      var keyword= encodeURIComponent(searchInput);
+      var ytURL='//gdata.youtube.com/feeds/api/videos?q='+keyword+'&max-results='+maxResult+'&v=2&alt=jsonc';
+      suggestionDiv = suggestionDiv.indexOf('#') == 0 ? suggestionDiv : ('#'+suggestionDiv);
+      console.log(suggestionDiv);
+
       $.ajax
       ({
         type: "GET",
@@ -91,11 +99,11 @@
         dataType:"jsonp",
         success: function(response)
         {
-          $("#startSongInputSuggestion").empty();
+          $(suggestionDiv).empty();
           if(response.data.items)
           {
             $.each(response.data.items, function(i, obj) {
-              $("#startSongInputSuggestion").append(
+              $(suggestionDiv).append(
                 "<li data-id='"+obj.id+"' class='suggestion-item dark'>"+
                   "<img class='suggestion-img' src='//img.youtube.com/vi/"+obj.id+"/1.jpg'>"+
                   "<span class='suggestion-title'>"+obj.title+"</span>"+
@@ -116,11 +124,12 @@
           }
           else
           {
-            $("#startSongInputSuggestion").append("<li>No match found.</li>");
+            $(suggestionDiv).append("<li>No match found.</li>");
           }
         }
       });
-    });
+
+    }
 
     function updateVideoID(id) {
       $("#player-frame").attr("src", "https://www.youtube.com/embed/"+
