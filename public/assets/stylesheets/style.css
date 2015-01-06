@@ -112,6 +112,7 @@ body {
   height: 48px;
   margin-bottom: 0.5rem;
   vertical-align: middle;
+  border-radius: 3px;
 }
 
 .suggestion li:hover {
