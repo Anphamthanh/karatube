@@ -56,10 +56,13 @@
       var key = (event.keyCode ? event.keyCode : event.which);
       
       if (key == 13) {
-        result = $(".suggestion").find("li");
-        $("#player-frame").attr("src", "https://www.youtube.com/embed/"+
-          result.data('id')+
-          "?enablejsapi=1&origin=https%3A%2F%2Ftubekara.herokuapp.com");
+        if ($(".selected").length != 0) {
+          updateVideoID($(".selected").data('id'));
+        }
+        else {
+          updateVideoID($(".suggestion-item").first().data('id'));
+          
+        }
         return;
       }
 
@@ -87,6 +90,9 @@
               $(this).addClass("selected");
             }, function() {
               $(this).removeClass("selected")
+            });
+            $(".suggestion-item").click(function() {
+              updateVideoID($(this).data('id'));
             });
           }
           else
