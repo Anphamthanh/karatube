@@ -39,13 +39,20 @@
   </footer>
   <script>
     $("#startSongInput").focus();
+    
     $("#user-control").mouseenter(function() {
       $("#user-control").css("width", "20%");
       $("#control-wrapper").removeClass("hidden");
     });
+    
     $("#user-control").mouseleave(function() {
       $("#user-control").css("width", "1%");
       $("#control-wrapper").addClass("hidden");
+    });
+
+    $(".suggestion").keypress(function(e) {
+      var keycode = (event.keyCode ? event.keyCode : event.which);
+      console.log(keycode);
     });
 
     $(".live-search-box").keyup(function() {
@@ -67,7 +74,7 @@
             $.each(response.data.items, function(i, obj) {
               $("#startSongInputSuggestion").append(
                 "<li data-id='"+obj.id+"' class='suggestion-item dark'>"+
-                  "<img class='suggestion-img' src='http://img.youtube.com/vi/"+obj.id+"/1.jpg'>"+
+                  "<img class='suggestion-img' src='//img.youtube.com/vi/"+obj.id+"/1.jpg'>"+
                   "<span class='suggestion-title'>"+obj.title+"</span>"+
                 "</li>"
                 );
