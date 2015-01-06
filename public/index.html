@@ -20,12 +20,10 @@
   <p id="welcome-text" ng-controller="MainCtrl">{{ welcome }}</p>
   <div id="search-form" ng-controller="MainCtrl">
     <input ng-model="startSong" type="text" class="live-search-box" id="startSongInput" autocomplete="off" placeholder="Please enter your song">
-    <div>
-      <ul id="startSongInputSuggestion" class="suggestion"></ul>
-    </div>
+    <ul id="startSongInputSuggestion" class="suggestion"></ul>
   </div>
   <div id="main-wrapper">
-    <iframe id="player-frame" class="hidden" frameborder="0" allowfullscreen="1" title="YouTube video player" src="https://www.youtube.com/embed/VwtAPeh4GOU?enablejsapi=1&origin=https%3A%2F%2Ftubekara.herokuapp.com"></iframe>
+    <iframe id="player-frame" class="hidden" frameborder="0" allowfullscreen="1" title="YouTube video player"></iframe>
     <div id="user-control" class="hidden">
       <div id="control-wrapper">
         <div id="control-title">Play List</div>       
@@ -50,16 +48,18 @@
       $("#control-wrapper").addClass("hidden");
     });
 
-    $(".suggestion").keypress(function(e) {
-      var keycode = (event.keyCode ? event.keyCode : event.which);
-      console.log(keycode);
-    });
-
-    $(".live-search-box").keyup(function() {
+    $(".live-search-box").keyup(function(event) {
       var searchInput = $(this).val();
       var keyword= encodeURIComponent(searchInput);
       var ytURL='//gdata.youtube.com/feeds/api/videos?q='+keyword+'&max-results=7&v=2&alt=jsonc';
       var id = $(this).attr("id");
+      var key = (event.keyCode ? event.keyCode : event.which);
+      
+      if (key == 13) {
+        result = $(".suggestion").find("li");
+        console.log(result.data('id'));
+        return;
+      }
 
       $.ajax
       ({
