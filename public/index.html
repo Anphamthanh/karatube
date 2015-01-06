@@ -56,7 +56,6 @@
       var keyword= encodeURIComponent(searchInput);
       var ytURL='//gdata.youtube.com/feeds/api/videos?q='+keyword+'&max-results=7&v=2&alt=jsonc';
       var id = $(this).attr("id");
-      console.log(id);
 
       $.ajax
       ({
@@ -70,7 +69,8 @@
           {
             $.each(response.data.items, function(i, obj) {
               $("#startSongInputSuggestion").append(
-                "<li class='suggestion-item'><img class='suggestion-img' src='http://img.youtube.com/vi/"+obj.id+"/1.jpg'>"+
+                "<li data-id='"+obj.id+"' class='suggestion-item dark'>"+
+                  "<img class='suggestion-img' src='http://img.youtube.com/vi/"+obj.id+"/1.jpg'>"+
                   "<span class='suggestion-title'>"+obj.title+"</span>"+
                 "</li>"
                 );

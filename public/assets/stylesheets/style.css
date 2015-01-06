@@ -96,12 +96,21 @@ body {
   height: 2rem;
 }
 
+.dark {
+  /*white-space: nowrap;
+  overflow: hidden;
+  margin-top: 0;*/
+}
+
 .suggestion {
   list-style-type: none;
+  padding-left: 1rem;
 }
 
 .suggestion li {
+  margin-bottom: 5px;
 }
+
 
 .suggestion-img {
   height: 48px;
@@ -118,5 +127,6 @@ body {
 }
 
 .suggestion-title {
-  margin-left: 2rem;
+  margin-left: 2rem;  
+  background:rgba(0,0,0,0.05);
 }
