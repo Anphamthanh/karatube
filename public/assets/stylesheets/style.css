@@ -96,3 +96,27 @@ body {
   height: 2rem;
 }
 
+.suggestion {
+  list-style-type: none;
+}
+
+.suggestion li {
+}
+
+.suggestion-img {
+  height: 48px;
+  margin-bottom: 0.5rem;
+  vertical-align: middle;
+}
+
+.suggestion li:hover {
+  cursor: pointer;
+}
+
+.suggestion-item {
+  vertical-align: text-top;
+}
+
+.suggestion-title {
+  margin-left: 2rem;
+}

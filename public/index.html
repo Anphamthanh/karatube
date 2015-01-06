@@ -23,7 +23,7 @@
       <input ng-model="startSong" type="text" class="live-search-box" id="startSongInput" autocomplete="off" placeholder="Please enter your song">
       <input id="submit-song" type="submit" value="Start Singing!">
       <div>
-        <ul id="startSongInputSuggestion"></ul>
+        <ul id="startSongInputSuggestion" class="suggestion"></ul>
       </div>
     </form>
   </div>
@@ -54,7 +54,7 @@
     $(".live-search-box").keyup(function() {
       var searchInput = $(this).val();
       var keyword= encodeURIComponent(searchInput);
-      var ytURL='//gdata.youtube.com/feeds/api/videos?q='+keyword+'&max-results=10&v=2&alt=jsonc';
+      var ytURL='//gdata.youtube.com/feeds/api/videos?q='+keyword+'&max-results=7&v=2&alt=jsonc';
       var id = $(this).attr("id");
       console.log(id);
 
@@ -65,18 +65,20 @@
         dataType:"jsonp",
         success: function(response)
         {
+          $("#startSongInputSuggestion").empty();
           if(response.data.items)
           {
-            videoTitles = $.map(response.data.items, function(o) { return o.title; });
-            videoIds = $.map(response.data.items, function(o) { return o.id; });
-            $("#startSongInputSuggestion").empty();
-            $.each(videoTitles, function(i, obj) {
-              $("#startSongInputSuggestion").append("<li>"+obj+"</li>");
+            $.each(response.data.items, function(i, obj) {
+              $("#startSongInputSuggestion").append(
+                "<li class='suggestion-item'><img class='suggestion-img' src='http://img.youtube.com/vi/"+obj.id+"/1.jpg'>"+
+                  "<span class='suggestion-title'>"+obj.title+"</span>"+
+                "</li>"
+                );
             });
           }
           else
           {
-            console.log("No result found!");
+            $("#startSongInputSuggestion").append("<li>No match found.</li>");
           }
         }
       });
