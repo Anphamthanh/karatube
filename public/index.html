@@ -57,7 +57,9 @@
       
       if (key == 13) {
         result = $(".suggestion").find("li");
-        console.log(result.data('id'));
+        $("#player-frame").attr("src", "https://www.youtube.com/embed/"+
+          result.data('id')+
+          "?enablejsapi=1&origin=https%3A%2F%2Ftubekara.herokuapp.com");
         return;
       }
 
