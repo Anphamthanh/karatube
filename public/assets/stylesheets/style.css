@@ -84,6 +84,7 @@ body {
   line-height: 1.5rem;
   width: 30rem;
   margin-left: 1rem;
+  padding-left: 5px;
 }
 
 #newSongInput {
@@ -98,6 +99,16 @@ body {
   margin-top: 0;*/
 }
 
+.selected {
+  display: inline-block;
+  background:rgba(0,0,0,0.2);
+  border-radius: 3px;
+}
+
+.selected .suggestion-title {
+  background: none;
+}
+
 .suggestion {
   list-style-type: none;
   padding-left: 1rem;
@@ -110,7 +121,6 @@ body {
 
 .suggestion-img {
   height: 48px;
-  margin-bottom: 0.5rem;
   vertical-align: middle;
   border-radius: 3px;
 }
@@ -126,4 +136,5 @@ body {
 .suggestion-title {
   margin-left: 2rem;  
   background:rgba(0,0,0,0.05);
+  margin-right: 2rem;
 }

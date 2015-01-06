@@ -78,9 +78,10 @@
                 "<li data-id='"+obj.id+"' class='suggestion-item dark'>"+
                   "<img class='suggestion-img' src='//img.youtube.com/vi/"+obj.id+"/1.jpg'>"+
                   "<span class='suggestion-title'>"+obj.title+"</span>"+
-                "</li>"
+                "</li><br />"
                 );
             });
+            $(".suggestion-item").first().addClass("selected");
           }
           else
           {
