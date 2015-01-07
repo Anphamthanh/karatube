@@ -51,10 +51,10 @@
 
     $("#startSongInput").keyup(function(event) {
       var id = $(this).attr("id");
-      var key = (event.keyCode ? event.keyCode : event.which);console.log($.inArray(key, [13, 38, 40]));
+      var key = (event.keyCode ? event.keyCode : event.which);
 
       if ([13, 38, 40].indexOf(key) != -1) {
-        handleKeyInput(key, "startSongInputSuggestion");
+        handleKeyInput(key, "startSongInputSuggestion", "suggestion-item", "selected");
         return;
       }
 
@@ -64,7 +64,7 @@
 
     $("#newSongInput").keyup(function(event) {
       var id = $(this).attr("id");
-      var key = (event.keyCode ? event.keyCode : event.which);console.log($.inArray(key, [13, 38, 40]));
+      var key = (event.keyCode ? event.keyCode : event.which);
 
       if ([13, 38, 40].indexOf(key) != -1) {
         handleKeyInput(key, "newSongInputSuggestion");
@@ -75,34 +75,35 @@
       updateSuggestion(searchInput, 7, "newSongInputSuggestion");
     });
 
-    function handleKeyInput(key, suggestionDiv) {      
+    function handleKeyInput(key, suggestionDiv, suggestionItemClass, selectedClass) {      
       var suggestionDiv = suggestionDiv.indexOf('#') == 0 ? suggestionDiv : ('#'+suggestionDiv);
-      var current = $(suggestionDiv + " .suggestion-item").index($(".selected"));
-      console.log(current);
+      var selectedClass = selectedClass.indexOf('.') == 0 ? selectedClass : ('.'+selectedClass);
+      var suggestionItemClass = suggestionItemClass.indexOf('.') == 0 ? suggestionItemClass : ('.'+suggestionItemClass);
+      var current = $(suggestionDiv+" "+suggestionItemClass).index($(selectedClass));
 
       if (key == 13) {
-        if ($(suggestionDiv + " .selected").length != 0) {
-          updateVideoID($(suggestionDiv + " .selected").first().data('id'));
+        if ($(suggestionDiv+" "+suggestionItemClass).length != 0) {
+          updateVideoID($(suggestionDiv+" "+selectedClass).first().data('id'));
         }
         else {
-          updateVideoID($(suggestionDiv + " .suggestion-item").first().data('id'));
+          updateVideoID($(suggestionDiv+" "+suggestionItemClass).first().data('id'));
         }
         openPlayingPage();
         return;
       }
 
       if (key == 40) {
-        if (current < $(suggestionDiv + " .suggestion-item").length - 1) {
-          $(suggestionDiv + " .suggestion-item").eq(current+1).addClass("selected");
-          $(suggestionDiv + " .suggestion-item").eq(current).removeClass("selected");
+        if (current < $(suggestionDiv+" "+suggestionItemClass).length - 1) {
+          $(suggestionDiv+" "+suggestionItemClass).eq(current+1).addClass(selectedClass.substring(1));
+          $(suggestionDiv+" "+suggestionItemClass).eq(current).removeClass(selectedClass.substring(1));
         }
         return;
       }
 
       if (key == 38) {
         if (current > 0) {
-          $(suggestionDiv + " .suggestion-item").eq(current).removeClass("selected");
-          $(suggestionDiv + " .suggestion-item").eq(current-1).addClass("selected");
+          $(suggestionDiv+" "+suggestionItemClass).eq(current).removeClass(selectedClass.substring(1));
+          $(suggestionDiv+" "+suggestionItemClass).eq(current-1).addClass(selectedClass.substring(1));
         }
         return;
       }
