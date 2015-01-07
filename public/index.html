@@ -41,6 +41,8 @@
     (function() {
       var USER_CONTROL_WIDTH_EXPANDED = "30%";
       var USER_CONTROL_WIDTH_COLLAPSED = "1%";
+      var PLAYLIST_DIV = "play-list";
+      var PLAYLIST_SGTION_DIV = "newSongInputSuggestion";
 
       var playlist = [];
 
@@ -146,7 +148,7 @@
             {
               $.each(response.data.items, function(i, obj) {
                 $(suggestionDiv).append(
-                  "<li data-id='"+obj.id+"' "+"data-title='"+obj.title+"'"+" class='suggestion-item dark'>"+
+                  "<li data-id='"+obj.id+"' "+"data-title='"+obj.title+"'"+" class='suggestion-item'>"+
                     "<img class='suggestion-img' src='"+getImgFromID(obj.id)+"'>"+
                     "<span class='suggestion-title'>"+obj.title+"</span>"+
                   "</li><br />"
@@ -184,8 +186,28 @@
 
       function addSong2Playlist(id, title) {
         var img = getImgFromID(id);
-        playlist.push({id, img, title});
+        playlist.push({ 'id': id, 'img': img, 'title': title});
+        updatePlaylistView();
         console.log(playlist);
+      }
+
+      function updatePlaylistView() {
+        var plDiv = ('#'+PLAYLIST_DIV);
+        var sgDiv = ('#'+PLAYLIST_SGTION_DIV);
+
+        $(sgDiv).addClass("hidden");
+        $("#newSongInput").val("");
+        $("#newSongInputSuggestion").empty();
+
+        $(plDiv).empty();
+        $.each(playlist, function(i, obj) {
+          $(plDiv).append(
+            "<li data-id='"+obj.id+"' "+"data-title='"+obj.title+"'"+" class='playlist-item'>"+
+              "<img class='playlist-item-img' src='"+obj.img+"'>"+
+              "<span class='playlist-item-title'>"+obj.title+"</span>"+
+            "</li><br />"
+            );
+        });
       }
 
       function getImgFromID(id) {
