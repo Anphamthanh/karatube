@@ -122,25 +122,25 @@ li.selected span.suggestion-title {
   margin-left: 1rem;
 }
 
-#newSongInputSuggestion {
+.user-list {
   list-style-type: none;
   padding-left: 1rem;
   white-space: nowrap;
   font-size: 10pt;
 }
 
-#newSongInputSuggestion li.suggestion-item {
+.user-list li {
   overflow: hidden;
   width: 90%;
   cursor: pointer;
 }
 
-#newSongInputSuggestion li.suggestion-item img.suggestion-img {
+.user-list li img {
   height: 48px;
   vertical-align: middle;
   border-radius: 3px;
 }
 
-#newSongInputSuggestion li.suggestion-item span.suggestion-title {
+.user-list li span {
   margin-left: 10px;  
 }
