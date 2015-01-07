@@ -105,13 +105,17 @@
         var selectedClass = selectedClass.indexOf('.') == 0 ? selectedClass : ('.'+selectedClass);
         var suggestionItemClass = suggestionItemClass.indexOf('.') == 0 ? suggestionItemClass : ('.'+suggestionItemClass);
         var current = $(suggestionDiv+" "+suggestionItemClass).index($(selectedClass));
+        var items = $(suggestionDiv+" "+suggestionItemClass);
+        var selectedItems = $(suggestionDiv+" "+selectedClass);
 
         if (key == 13) {
-          if ($(suggestionDiv+" "+selectedClass).length != 0) {
-            updateVideoID($(suggestionDiv+" "+selectedClass).first().data('id'));
+          if (selectedItems.length != 0) {
+            updateVideoID(selectedItems.first().data('id'));
+            addSong2Playlist(selectedItems.first().data('id'), selectedItems.first().data('title'));
           }
           else {
-            updateVideoID($(suggestionDiv+" "+suggestionItemClass).first().data('id'));
+            updateVideoID(items.first().data('id'));
+            addSong2Playlist(items.data('id').first(), items.first().data('title'));
           }
           openPlayingPage();
           return;
@@ -166,7 +170,8 @@
                 $(this).removeClass("selected")
               });
               $("#startSongInputSuggestion li.suggestion-item").click(function() {
-                updateVideoID($(this).data('id'));
+                addSong2Playlist($(this).data('id'), $(this).data('title'));
+                playVideo($(this).data('id'));
                 openPlayingPage();
               });
               $("#newSongInputSuggestion li.suggestion-item").click(function() {
