@@ -25,7 +25,7 @@ body {
   right: 0;
   box-sizing: border-box;
   background-color: #1e1e1e;
-  opacity: 0.7;
+  opacity: 0.8;
   overflow: hidden;
 }
 
@@ -59,25 +59,22 @@ body {
   color: #50EBD2;
 }
 
-#main-wrapper {
-}
-
 .hidden {
   display: none;
-}
-
-.btn {
-  vertical-align: middle;
-  padding: 9px;
-}
-
-.btn:hover {
-  cursor: pointer;
 }
 
 #welcome-text {
   margin-left: 1rem;
   font-weight: bold;
+}
+
+.selected {
+  background:rgba(0,0,0,0.2);
+  border-radius: 3px;
+}
+
+li.selected span.suggestion-title {
+  background: none !important;
 }
 
 #startSongInput {
@@ -87,41 +84,19 @@ body {
   padding-left: 5px;
 }
 
-#newSongInput {
-  line-height: 1.5rem;
-  width: 17rem;
-  margin-left: 1rem;
-}
-
-.dark {
-  /*white-space: nowrap;
-  overflow: hidden;
-  margin-top: 0;*/
-}
-
-.selected {
-  background:rgba(0,0,0,0.2);
-  border-radius: 3px;
-}
-
-.selected .suggestion-title {
-  background: none;
-}
-
 #startSongInputSuggestion {
   list-style-type: none;
   padding-left: 1rem;
   padding-right: 1rem;
 }
 
-
-.suggestion-img {
+#startSongInputSuggestion li.suggestion-item img.suggestion-img {
   height: 48px;
   vertical-align: middle;
   border-radius: 3px;
 }
 
-.suggestion-item {
+#startSongInputSuggestion li.suggestion-item {
   vertical-align: text-top;
   cursor: pointer;
   overflow: hidden;
@@ -129,8 +104,21 @@ body {
   margin-bottom: 5px;
 }
 
-.suggestion-title {
-  margin-left: 2rem;  
+#startSongInputSuggestion li.suggestion-item span.suggestion-title {
+  margin-left: 1.2rem;  
   background:rgba(0,0,0,0.05);
   margin-right: 2rem;
+}
+
+#newSongInput {
+  line-height: 1.5rem;
+  width: 17rem;
+  margin-left: 1rem;
+}
+
+#newSongInputSuggestion {
+  list-style-type: none;
+  padding-left: 1rem;
+  white-space: nowrap;
+  font-size: 9pt;
 }
