@@ -108,14 +108,10 @@ body {
   background: none;
 }
 
-.suggestion {
+#start-song-suggestion {
   list-style-type: none;
   padding-left: 1rem;
   padding-right: 1rem;
-}
-
-.suggestion li {
-  margin-bottom: 5px;
 }
 
 
@@ -130,6 +126,7 @@ body {
   cursor: pointer;
   overflow: hidden;
   white-space: nowrap;
+  margin-bottom: 5px;
 }
 
 .suggestion-title {

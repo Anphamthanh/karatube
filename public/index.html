@@ -20,7 +20,7 @@
   <p id="welcome-text" ng-controller="MainCtrl">{{ welcome }}</p>
   <div id="search-form" ng-controller="MainCtrl">
     <input ng-model="startSong" type="text" id="startSongInput" autocomplete="off" placeholder="Please enter your song">
-    <ul id="startSongInputSuggestion" class="suggestion"></ul>
+    <ul id="startSongInputSuggestion" class="start-song-suggestion"></ul>
   </div>
   <div id="main-wrapper">
     <iframe id="player-frame" class="hidden" frameborder="0" allowfullscreen="1" title="YouTube video player"></iframe>
@@ -29,7 +29,7 @@
         <div id="control-title">Play List</div>       
         <input ng-model="newSongInput" type="text" id="newSongInput" placeholder="Please add your next song">
         <i class="btn fa fa-plus fa-2x"></i>
-        <ul id="newSongInputSuggestion" class="suggestion"></ul>       
+        <ul id="newSongInputSuggestion" class="playlist-suggestion"></ul>       
       </div>
     </div>
   </div>
@@ -67,7 +67,7 @@
       var key = (event.keyCode ? event.keyCode : event.which);
 
       if ([13, 38, 40].indexOf(key) != -1) {
-        handleKeyInput(key, "newSongInputSuggestion");
+        handleKeyInput(key, "newSongInputSuggestion", "suggestion-item", "selected");
         return;
       }
 
@@ -169,6 +169,7 @@
       $("#user-control").removeClass("hidden");
       $("#user-control").css("height", height);
       $("body").addClass("stripesDarkBackground");
+      $("#newSongInput").focus();
       setTimeout(function() {
         $("#user-control").trigger("mouseleave");
       }, 1000);
