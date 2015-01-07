@@ -42,7 +42,8 @@
       var USER_CONTROL_WIDTH_EXPANDED = "30%";
       var USER_CONTROL_WIDTH_COLLAPSED = "1%";
 
-      var playList = ["init"];
+      var playList = [];
+
       $("#startSongInput").focus();
       
       $("#user-control").mouseenter(function() {
@@ -57,7 +58,7 @@
 
       $("#startSongInput").keyup(function(event) {
         var id = $(this).attr("id");
-        var key = (event.keyCode ? event.keyCode : event.which);console.log(playList);
+        var key = (event.keyCode ? event.keyCode : event.which);
 
         if ([13, 38, 40].indexOf(key) != -1) {
           handleKeyInput(key, "startSongInputSuggestion", "suggestion-item", "selected");
@@ -133,8 +134,8 @@
             {
               $.each(response.data.items, function(i, obj) {
                 $(suggestionDiv).append(
-                  "<li data-id='"+obj.id+"' class='suggestion-item dark'>"+
-                    "<img class='suggestion-img' src='//img.youtube.com/vi/"+obj.id+"/1.jpg'>"+
+                  "<li data-id='"+obj.id+"' "+"data-title='"+obj.title+"'"+" class='suggestion-item dark'>"+
+                    "<img class='suggestion-img' src='"+getImgFromID(obj.id)+"'>"+
                     "<span class='suggestion-title'>"+obj.title+"</span>"+
                   "</li><br />"
                   );
@@ -146,9 +147,12 @@
               }, function() {
                 $(this).removeClass("selected")
               });
-              $(".suggestion-item").click(function() {
+              $("#startSongInputSuggestion li.suggestion-item").click(function() {
                 updateVideoID($(this).data('id'));
                 openPlayingPage();
+              });
+              $("#newSongInputSuggestion li.suggestion-item").click(function() {
+                addSong($(this).data('id'), $(this).data('title'));
               });
             }
             else
@@ -166,8 +170,14 @@
             "?enablejsapi=1&origin=https%3A%2F%2Ftubekara.herokuapp.com");
       }
 
-      function addSong() {
-        // va
+      function addSong(id, title) {
+        var img = getImgFromID(id);
+        playList.push({id, img, title});
+        console.log(playList);
+      }
+
+      function getImgFromID(id) {
+        return "//img.youtube.com/vi/"+id+"/1.jpg";
       }
 
       function openPlayingPage() {
