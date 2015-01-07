@@ -93,6 +93,10 @@
         }
 
         var searchInput = $(this).val();
+        if (searchInput.length > 1) {
+          $("#newSongInputSuggestion").removeClass("hidden");
+          $("#playlist").addClass("hidden");
+        }
         updateSuggestion(searchInput, 7, "newSongInputSuggestion");
       });
 
@@ -228,7 +232,14 @@
           $("#user-control").trigger("mouseleave");
         }, 1000);
         $("#add-song-btn").click(function() {
-          addSong2Playlist($(".selected").data('id'), $(".selected").data('title'));
+          var selectedSong = {};
+          if ($("#newSongInputSuggestion li.selected").length != 0) {
+            selectedSong = $("#newSongInputSuggestion li.selected").first();
+          }
+          else {
+            selectedSong = $("#newSongInputSuggestion li.suggestion-item").first();
+          }
+          addSong2Playlist(selectedSong.data('id'), selectedSong.data('title'));
         });
         // $("#player-frame")[0].src += "&autoplay=1";
       }
