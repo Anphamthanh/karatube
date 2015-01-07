@@ -28,7 +28,7 @@
       <div id="control-wrapper">
         <div id="control-title">Play List</div>       
         <input ng-model="newSongInput" type="text" id="newSongInput" placeholder="Please add your next song">
-        <i class="btn fa fa-plus fa-2x"></i>
+        <i class="btn fa fa-plus fa-2x" id="add-song-btn"></i>
         <ul id="newSongInputSuggestion"></ul>       
       </div>
     </div>
@@ -173,6 +173,9 @@
       setTimeout(function() {
         $("#user-control").trigger("mouseleave");
       }, 1000);
+      $("#add-song-btn").click(function() {
+        handleKeyInput(13, "newSongInputSuggestion", "suggestion-item", "selected");
+      });
       // $("#player-frame")[0].src += "&autoplay=1";
     }
 
