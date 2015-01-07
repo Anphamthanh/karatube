@@ -51,13 +51,15 @@
 
     $(".live-search-box").keyup(function(event) {
       var id = $(this).attr("id");
-      var key = (event.keyCode ? event.keyCode : event.which);
+      var key = (event.keyCode ? event.keyCode : event.which);console.log($.inArray(key, [13, 38, 40]));
 
-      handleKeyInput(key, "startSongInputSuggestion");
+      if ([13, 38, 40].indexOf(key) != -1) {
+        handleKeyInput(key, "startSongInputSuggestion");
+        return;
+      }
 
       var searchInput = $(this).val();
       updateSuggestion(searchInput, 7, "startSongInputSuggestion");
-
     });
 
     function handleKeyInput(key, suggestionDiv) {      
@@ -76,22 +78,21 @@
         return;
       }
 
-      // if (key == 40) {
-      //   if (current < $(suggestionDiv + " .suggestion-item").length - 1) {
-      //     $(suggestionDiv + " .suggestion-item").eq(current).removeClass("selected");
-      //     $(suggestionDiv + " .suggestion-item").eq(current+1).addClass("selected");
-      //   }
-      //   return;
-      // }
+      if (key == 40) {
+        if (current < $(suggestionDiv + " .suggestion-item").length - 1) {
+          $(suggestionDiv + " .suggestion-item").eq(current+1).addClass("selected");
+          $(suggestionDiv + " .suggestion-item").eq(current).removeClass("selected");
+        }
+        return;
+      }
 
-      // if (key == 38) {
-      //   if (current > 0) {
-      //     $(suggestionDiv + " .suggestion-item").eq(current).removeClass("selected");
-      //     $(suggestionDiv + " .suggestion-item").eq(current-1).addClass("selected");
-      //   }
-      //   return;
-      // }
-
+      if (key == 38) {
+        if (current > 0) {
+          $(suggestionDiv + " .suggestion-item").eq(current).removeClass("selected");
+          $(suggestionDiv + " .suggestion-item").eq(current-1).addClass("selected");
+        }
+        return;
+      }
 
     }
 
