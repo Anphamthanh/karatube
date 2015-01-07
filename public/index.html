@@ -22,14 +22,15 @@
     <input ng-model="startSong" type="text" id="startSongInput" autocomplete="off" placeholder="Please enter your song">
     <ul id="startSongInputSuggestion"></ul>
   </div>
-  <div id="main-wrapper">
+  <div id="main-wrapper" ng-controller="MainCtrl">
     <iframe id="player-frame" class="hidden" frameborder="0" allowfullscreen="1" title="YouTube video player"></iframe>
     <div id="user-control" class="hidden">
       <div id="control-wrapper">
         <div id="control-title">Play List</div>       
         <input ng-model="newSongInput" type="text" id="newSongInput" placeholder="Please add your next song">
         <i class="btn fa fa-plus fa-2x" id="add-song-btn"></i>
-        <ul id="newSongInputSuggestion"></ul>       
+        <ul id="newSongInputSuggestion"></ul> 
+        <ul id="play-list"></ul>      
       </div>
     </div>
   </div>
@@ -37,148 +38,154 @@
     <p>Developed by <a target="_blank" href="http://www.apresume.com">An Pham</a>. All rights reserved.</p>
   </footer>
   <script>
-    $("#startSongInput").focus();
-    
-    $("#user-control").mouseenter(function() {
-      $("#user-control").css("width", "30%");
-      $("#control-wrapper").removeClass("hidden");
-    });
-    
-    $("#user-control").mouseleave(function() {
-      $("#user-control").css("width", "1%");
-      $("#control-wrapper").addClass("hidden");
-    });
-
-    $("#startSongInput").keyup(function(event) {
-      var id = $(this).attr("id");
-      var key = (event.keyCode ? event.keyCode : event.which);
-
-      if ([13, 38, 40].indexOf(key) != -1) {
-        handleKeyInput(key, "startSongInputSuggestion", "suggestion-item", "selected");
-        return;
-      }
-
-      var searchInput = $(this).val();
-      updateSuggestion(searchInput, 7, "startSongInputSuggestion");
-    });
-
-    $("#newSongInput").keyup(function(event) {
-      var id = $(this).attr("id");
-      var key = (event.keyCode ? event.keyCode : event.which);
-
-      if ([13, 38, 40].indexOf(key) != -1) {
-        handleKeyInput(key, "newSongInputSuggestion", "suggestion-item", "selected");
-        return;
-      }
-
-      var searchInput = $(this).val();
-      updateSuggestion(searchInput, 7, "newSongInputSuggestion");
-    });
-
-    function handleKeyInput(key, suggestionDiv, suggestionItemClass, selectedClass) {      
-      var suggestionDiv = suggestionDiv.indexOf('#') == 0 ? suggestionDiv : ('#'+suggestionDiv);
-      var selectedClass = selectedClass.indexOf('.') == 0 ? selectedClass : ('.'+selectedClass);
-      var suggestionItemClass = suggestionItemClass.indexOf('.') == 0 ? suggestionItemClass : ('.'+suggestionItemClass);
-      var current = $(suggestionDiv+" "+suggestionItemClass).index($(selectedClass));
-
-      if (key == 13) {
-        if ($(suggestionDiv+" "+suggestionItemClass).length != 0) {
-          updateVideoID($(suggestionDiv+" "+selectedClass).first().data('id'));
-        }
-        else {
-          updateVideoID($(suggestionDiv+" "+suggestionItemClass).first().data('id'));
-        }
-        openPlayingPage();
-        return;
-      }
-
-      if (key == 40) {
-        if (current < $(suggestionDiv+" "+suggestionItemClass).length - 1) {
-          $(suggestionDiv+" "+suggestionItemClass).eq(current+1).addClass(selectedClass.substring(1));
-          $(suggestionDiv+" "+suggestionItemClass).eq(current).removeClass(selectedClass.substring(1));
-        }
-        return;
-      }
-
-      if (key == 38) {
-        if (current > 0) {
-          $(suggestionDiv+" "+suggestionItemClass).eq(current).removeClass(selectedClass.substring(1));
-          $(suggestionDiv+" "+suggestionItemClass).eq(current-1).addClass(selectedClass.substring(1));
-        }
-        return;
-      }
-
-    }
-
-    function updateSuggestion(searchInput, maxResult, suggestionDiv) {
-      var keyword= encodeURIComponent(searchInput);
-      var ytURL='//gdata.youtube.com/feeds/api/videos?q='+keyword+'&max-results='+maxResult+'&v=2&alt=jsonc';
-      var suggestionDiv = suggestionDiv.indexOf('#') == 0 ? suggestionDiv : ('#'+suggestionDiv);
-
-      $.ajax
-      ({
-        type: "GET",
-        url: ytURL,
-        dataType:"jsonp",
-        success: function(response)
-        {
-          $(suggestionDiv).empty();
-          if(response.data.items)
-          {
-            $.each(response.data.items, function(i, obj) {
-              $(suggestionDiv).append(
-                "<li data-id='"+obj.id+"' class='suggestion-item dark'>"+
-                  "<img class='suggestion-img' src='//img.youtube.com/vi/"+obj.id+"/1.jpg'>"+
-                  "<span class='suggestion-title'>"+obj.title+"</span>"+
-                "</li><br />"
-                );
-            });
-
-            $(".suggestion-item").first().addClass("selected");
-            $(".suggestion-item").hover(function() {
-              $(this).addClass("selected");
-            }, function() {
-              $(this).removeClass("selected")
-            });
-            $(".suggestion-item").click(function() {
-              updateVideoID($(this).data('id'));
-              openPlayingPage();
-            });
-          }
-          else
-          {
-            $(suggestionDiv).append("<li>No match found.</li>");
-          }
-        }
+    (function() {
+      var playList = ["init"];
+      $("#startSongInput").focus();
+      
+      $("#user-control").mouseenter(function() {
+        $("#user-control").css("width", "30%");
+        $("#control-wrapper").removeClass("hidden");
+      });
+      
+      $("#user-control").mouseleave(function() {
+        $("#user-control").css("width", "1%");
+        $("#control-wrapper").addClass("hidden");
       });
 
-    }
+      $("#startSongInput").keyup(function(event) {
+        var id = $(this).attr("id");
+        var key = (event.keyCode ? event.keyCode : event.which);console.log(playList);
 
-    function updateVideoID(id) {
-      $("#player-frame").attr("src", "https://www.youtube.com/embed/"+
-          id+
-          "?enablejsapi=1&origin=https%3A%2F%2Ftubekara.herokuapp.com");
-    }
+        if ([13, 38, 40].indexOf(key) != -1) {
+          handleKeyInput(key, "startSongInputSuggestion", "suggestion-item", "selected");
+          return;
+        }
 
-    function openPlayingPage() {
-      height = $("html").height()*0.85;
-      $("html").css('background-image', 'none');
-      $("#search-form").remove();
-      $("#player-frame").removeClass("hidden");
-      $("#player-frame").css("height", height);
-      $("#user-control").removeClass("hidden");
-      $("#user-control").css("height", height);
-      $("body").addClass("stripesDarkBackground");
-      $("#newSongInput").focus();
-      setTimeout(function() {
-        $("#user-control").trigger("mouseleave");
-      }, 1000);
-      $("#add-song-btn").click(function() {
-        handleKeyInput(13, "newSongInputSuggestion", "suggestion-item", "selected");
+        var searchInput = $(this).val();
+        updateSuggestion(searchInput, 7, "startSongInputSuggestion");
       });
-      // $("#player-frame")[0].src += "&autoplay=1";
-    }
 
+      $("#newSongInput").keyup(function(event) {
+        var id = $(this).attr("id");
+        var key = (event.keyCode ? event.keyCode : event.which);
+
+        if ([13, 38, 40].indexOf(key) != -1) {
+          handleKeyInput(key, "newSongInputSuggestion", "suggestion-item", "selected");
+          return;
+        }
+
+        var searchInput = $(this).val();
+        updateSuggestion(searchInput, 7, "newSongInputSuggestion");
+      });
+
+      function handleKeyInput(key, suggestionDiv, suggestionItemClass, selectedClass) {      
+        var suggestionDiv = suggestionDiv.indexOf('#') == 0 ? suggestionDiv : ('#'+suggestionDiv);
+        var selectedClass = selectedClass.indexOf('.') == 0 ? selectedClass : ('.'+selectedClass);
+        var suggestionItemClass = suggestionItemClass.indexOf('.') == 0 ? suggestionItemClass : ('.'+suggestionItemClass);
+        var current = $(suggestionDiv+" "+suggestionItemClass).index($(selectedClass));
+
+        if (key == 13) {
+          if ($(suggestionDiv+" "+suggestionItemClass).length != 0) {
+            updateVideoID($(suggestionDiv+" "+selectedClass).first().data('id'));
+          }
+          else {
+            updateVideoID($(suggestionDiv+" "+suggestionItemClass).first().data('id'));
+          }
+          openPlayingPage();
+          return;
+        }
+
+        if (key == 40) {
+          if (current < $(suggestionDiv+" "+suggestionItemClass).length - 1) {
+            $(suggestionDiv+" "+suggestionItemClass).eq(current+1).addClass(selectedClass.substring(1));
+            $(suggestionDiv+" "+suggestionItemClass).eq(current).removeClass(selectedClass.substring(1));
+          }
+          return;
+        }
+
+        if (key == 38) {
+          if (current > 0) {
+            $(suggestionDiv+" "+suggestionItemClass).eq(current).removeClass(selectedClass.substring(1));
+            $(suggestionDiv+" "+suggestionItemClass).eq(current-1).addClass(selectedClass.substring(1));
+          }
+          return;
+        }
+
+      }
+
+      function updateSuggestion(searchInput, maxResult, suggestionDiv) {
+        var keyword= encodeURIComponent(searchInput);
+        var ytURL='//gdata.youtube.com/feeds/api/videos?q='+keyword+'&max-results='+maxResult+'&v=2&alt=jsonc';
+        var suggestionDiv = suggestionDiv.indexOf('#') == 0 ? suggestionDiv : ('#'+suggestionDiv);
+
+        $.ajax
+        ({
+          type: "GET",
+          url: ytURL,
+          dataType:"jsonp",
+          success: function(response)
+          {
+            $(suggestionDiv).empty();
+            if(response.data.items)
+            {
+              $.each(response.data.items, function(i, obj) {
+                $(suggestionDiv).append(
+                  "<li data-id='"+obj.id+"' class='suggestion-item dark'>"+
+                    "<img class='suggestion-img' src='//img.youtube.com/vi/"+obj.id+"/1.jpg'>"+
+                    "<span class='suggestion-title'>"+obj.title+"</span>"+
+                  "</li><br />"
+                  );
+              });
+
+              $(".suggestion-item").first().addClass("selected");
+              $(".suggestion-item").hover(function() {
+                $(this).addClass("selected");
+              }, function() {
+                $(this).removeClass("selected")
+              });
+              $(".suggestion-item").click(function() {
+                updateVideoID($(this).data('id'));
+                openPlayingPage();
+              });
+            }
+            else
+            {
+              $(suggestionDiv).append("<li>No match found.</li>");
+            }
+          }
+        });
+
+      }
+
+      function updateVideoID(id) {
+        $("#player-frame").attr("src", "https://www.youtube.com/embed/"+
+            id+
+            "?enablejsapi=1&origin=https%3A%2F%2Ftubekara.herokuapp.com");
+      }
+
+      function addSong() {
+        va
+      }
+
+      function openPlayingPage() {
+        height = $("html").height()*0.85;
+        $("html").css('background-image', 'none');
+        $("#search-form").remove();
+        $("#player-frame").removeClass("hidden");
+        $("#player-frame").css("height", height);
+        $("#user-control").removeClass("hidden");
+        $("#user-control").css("height", height);
+        $("body").addClass("stripesDarkBackground");
+        $("#newSongInput").focus();
+        setTimeout(function() {
+          $("#user-control").trigger("mouseleave");
+        }, 1000);
+        $("#add-song-btn").click(function() {
+          $("#main-wrapper").scope().get(addSong($(".selected").data('id')));
+        });
+        // $("#player-frame")[0].src += "&autoplay=1";
+      }
+    })();
   </script>
 </body>
 </html>
