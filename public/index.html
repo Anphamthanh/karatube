@@ -39,16 +39,19 @@
   </footer>
   <script>
     (function() {
+      var USER_CONTROL_WIDTH_EXPANDED = "30%";
+      var USER_CONTROL_WIDTH_COLLAPSED = "1%";
+
       var playList = ["init"];
       $("#startSongInput").focus();
       
       $("#user-control").mouseenter(function() {
-        $("#user-control").css("width", "30%");
+        $("#user-control").css("width", USER_CONTROL_WIDTH_EXPANDED);
         $("#control-wrapper").removeClass("hidden");
       });
       
       $("#user-control").mouseleave(function() {
-        $("#user-control").css("width", "1%");
+        $("#user-control").css("width", USER_CONTROL_WIDTH_COLLAPSED);
         $("#control-wrapper").addClass("hidden");
       });
 
@@ -164,7 +167,7 @@
       }
 
       function addSong() {
-        va
+        // va
       }
 
       function openPlayingPage() {
@@ -181,7 +184,7 @@
           $("#user-control").trigger("mouseleave");
         }, 1000);
         $("#add-song-btn").click(function() {
-          $("#main-wrapper").scope().get(addSong($(".selected").data('id')));
+          addSong($(".selected").data('id'));
         });
         // $("#player-frame")[0].src += "&autoplay=1";
       }
