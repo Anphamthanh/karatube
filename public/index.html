@@ -42,7 +42,7 @@
       var USER_CONTROL_WIDTH_EXPANDED = "30%";
       var USER_CONTROL_WIDTH_COLLAPSED = "1%";
 
-      var playList = [];
+      var playlist = [];
 
       $("#startSongInput").focus();
       
@@ -86,7 +86,7 @@
           else {
             selectedSong = $("#newSongInputSuggestion li.suggestion-item").first();
           }
-          addSong(selectedSong.data('id'), selectedSong.data('title'));
+          addSong2Playlist(selectedSong.data('id'), selectedSong.data('title'));
           return;
         }
 
@@ -164,7 +164,7 @@
                 openPlayingPage();
               });
               $("#newSongInputSuggestion li.suggestion-item").click(function() {
-                addSong($(this).data('id'), $(this).data('title'));
+                addSong2Playlist($(this).data('id'), $(this).data('title'));
               });
             }
             else
@@ -182,10 +182,10 @@
             "?enablejsapi=1&origin=https%3A%2F%2Ftubekara.herokuapp.com");
       }
 
-      function addSong(id, title) {
+      function addSong2Playlist(id, title) {
         var img = getImgFromID(id);
-        playList.push({id, img, title});
-        console.log(playList);
+        playlist.push({id, img, title});
+        console.log(playlist);
       }
 
       function getImgFromID(id) {
@@ -206,7 +206,7 @@
           $("#user-control").trigger("mouseleave");
         }, 1000);
         $("#add-song-btn").click(function() {
-          addSong($(".selected").data('id'));
+          addSong2Playlist($(".selected").data('id'), $(".selected").data('title'));
         });
         // $("#player-frame")[0].src += "&autoplay=1";
       }
