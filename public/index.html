@@ -212,6 +212,20 @@
             "</li><br />"
             );
         });
+
+        $(".playlist-item").click(function() {
+          playVideo($(this).data('id'));
+        })
+        $(".playlist-item").hover(function() {
+          $(this).addClass("selected");
+        }, function() {
+          $(this).removeClass("selected")
+        });
+      }
+
+      function playVideo(id) {
+        updateVideoID(id);
+        $("#player-frame")[0].src += "&autoplay=1";
       }
 
       function getImgFromID(id) {
