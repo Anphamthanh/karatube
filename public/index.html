@@ -156,9 +156,9 @@
             {
               $.each(response.data.items, function(i, obj) {
                 $(suggestionDiv).append(
-                  "<li data-id='"+obj.id+"' "+"data-title='"+obj.title+"'"+" class='suggestion-item'>"+
+                  "<li data-id='"+obj.id+"' "+"data-title='"+escapeQuotes(obj.title)+"'"+" class='suggestion-item'>"+
                     "<img class='suggestion-img' src='"+getImgFromID(obj.id)+"'>"+
-                    "<span class='suggestion-title'>"+obj.title+"</span>"+
+                    "<span class='suggestion-title'>"+escapeQuotes(obj.title)+"</span>"+
                   "</li><br />"
                   );
               });
@@ -261,6 +261,10 @@
           addSong2Playlist(selectedSong.data('id'), selectedSong.data('title'));
         });
         // $("#player-frame")[0].src += "&autoplay=1";
+      }
+
+      function escapeQuotes(str) {
+        return (str + '').replace('"', '&#34;').replace("'", '&#39;');
       }
     })();
   </script>
