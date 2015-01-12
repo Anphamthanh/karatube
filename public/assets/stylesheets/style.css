@@ -140,4 +140,26 @@ li.suggestion-item .suggestion-uploader
 
 .user-list li {
   width: 90%;
+  cursor: pointer;
+}
+
+.user-list li.playlist-item .playlist-item-img {
+  height: 48px;
+  vertical-align: middle;
+  border-radius: 3px;
+}
+
+.user-list li.playlist-item .playlist-item-info {
+  margin-left: 1.2rem;  
+  background:rgba(0,0,0,0.05);
+  margin-right: 2rem;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.playlist-item-view,
+.playlist-item-uploader
+ {
+  font-size: 9pt;
+  color: #06BD9B;
 }
