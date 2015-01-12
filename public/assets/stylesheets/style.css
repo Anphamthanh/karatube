@@ -141,6 +141,7 @@ li.suggestion-item .suggestion-uploader
 .user-list li {
   width: 90%;
   cursor: pointer;
+  overflow: hidden;
 }
 
 .user-list li.playlist-item .playlist-item-img {
