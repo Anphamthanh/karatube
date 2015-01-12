@@ -88,7 +88,7 @@
           else {
             selectedSong = $("#newSongInputSuggestion li.suggestion-item").first();
           }
-          addSong2Playlist(selectedSong.data('id'), selectedSong.data('title'));
+          addSong2Playlist(selectedSong);
           return;
         }
 
@@ -117,11 +117,11 @@
         if (key == 13) {
           if (selectedItems.length != 0) {
             updateVideoID(selectedItems.first().data('id'));
-            addSong2Playlist(selectedItems.first().data('id'), selectedItems.first().data('title'));
+            addSong2Playlist(selectedItems.first());
           }
           else {
             updateVideoID(items.first().data('id'));
-            addSong2Playlist(items.data('id').first(), items.first().data('title'));
+            addSong2Playlist(items.first().data('id'));
           }
           openPlayingPage();
           return;
@@ -163,8 +163,10 @@
               $.each(response.data.items, function(i, obj) {
                 $(suggestionDiv).append(
                   "<li data-id='"+obj.id+"' "+
-                    "data-title='"+escapeQuotes(obj.title)+"'"+
-                    "duration='"+obj.duration+"' "+
+                    "data-title='"+escapeQuotes(obj.title)+"' "+
+                    "data-uploader='"+obj.uploader+"' "+
+                    "data-view='"+obj.viewCount+"' "+
+                    "data-duration='"+obj.duration+"' "+
                     " class='suggestion-item'>"+
                       "<img class='suggestion-img' src='"+getImgFromID(obj.id)+"'>"+
                       "<span class='suggestion-info'>"+
@@ -183,12 +185,12 @@
                 $(this).removeClass("selected")
               });
               $("#startSongInputSuggestion li.suggestion-item").click(function() {
-                addSong2Playlist($(this).data('id'), $(this).data('title'));
+                addSong2Playlist($(this));
                 playVideo($(this).data('id'));
                 openPlayingPage();
               });
               $("#newSongInputSuggestion li.suggestion-item").click(function() {
-                addSong2Playlist($(this).data('id'), $(this).data('title'));
+                addSong2Playlist($(this));
               });
             }
             else
@@ -211,11 +213,14 @@
             "?enablejsapi=1&origin=https%3A%2F%2Ftubekara.herokuapp.com");
       }
 
-      function addSong2Playlist(id, title) {
+      function addSong2Playlist(liObj) {
         $("#newSongInputSuggestion").addClass("hidden");
         $("#playlist").removeClass("hidden"); 
-        var img = getImgFromID(id);
-        playlist.push({ 'id': id, 'img': img, 'title': title});
+        obj = { 'id': liObj.data('id'), 'img': getImgFromID(liObj.data('id')), 
+          'title': liObj.data('title'), 
+          'duration': liObj.data('duration'), 'uploader': liObj.data('uploader'), 
+          'view': liObj.data('view') };
+        playlist.push(obj);
         updatePlaylistView();  
         console.log(playlist);
       }
@@ -231,10 +236,14 @@
         $(plDiv).empty();
         $.each(playlist, function(i, obj) {
           $(plDiv).append(
-            "<li data-id='"+obj.id+"' "+"data-title='"+obj.title+"'"+" class='playlist-item'>"+
+            "<li data-id='"+obj.id+"'"+" class='playlist-item'>"+
               "<img class='playlist-item-img' src='"+obj.img+"'>"+
-              "<span class='playlist-item-title'>"+obj.title+"</span>"+
-            "</li><br />"
+              "<span class='playlist-item-info'>"+
+                        "<div class='playlist-item-title'>"+obj.title+"</div>"+
+                        "<span class='playlist-item-uploader'>by "+obj.uploader+"&nbsp;&nbsp;&nbsp;</span>"+
+                        "<span class='playlist-item-view'>"+obj.view+" views</span>"+
+                      "</span>"+
+            "</li>"
             );
         });
 
@@ -278,7 +287,7 @@
           else {
             selectedSong = $("#newSongInputSuggestion li.suggestion-item").first();
           }
-          addSong2Playlist(selectedSong.data('id'), selectedSong.data('title'));
+          addSong2Playlist(selectedSong);
         });
         // $("#player-frame")[0].src += "&autoplay=1";
       }
