@@ -118,7 +118,7 @@ li.selected span.suggestion-title {
 
 #newSongInput {
   line-height: 1.5rem;
-  width: 27rem;
+  width: 75%;
   margin-left: 1rem;
 }
 
