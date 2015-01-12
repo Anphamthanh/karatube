@@ -63,6 +63,7 @@ body {
   display: none;
 }
 
+
 .btn {
   cursor: pointer;
   vertical-align: middle;
@@ -79,7 +80,7 @@ body {
   border-radius: 3px;
 }
 
-li.selected span.suggestion-title {
+li.selected span.suggestion-info {
   background: none !important;
 }
 
@@ -96,10 +97,18 @@ li.selected span.suggestion-title {
   padding-right: 1rem;
 }
 
-#startSongInputSuggestion li.suggestion-item img.suggestion-img {
+#startSongInputSuggestion li.suggestion-item .suggestion-img {
   height: 48px;
   vertical-align: middle;
   border-radius: 3px;
+}
+
+#startSongInputSuggestion li.suggestion-item .suggestion-info {
+  margin-left: 1.2rem;  
+  background:rgba(0,0,0,0.05);
+  margin-right: 2rem;
+  display: inline-block;
+  vertical-align: middle;
 }
 
 #startSongInputSuggestion li.suggestion-item {
@@ -109,11 +118,11 @@ li.selected span.suggestion-title {
   white-space: nowrap;
   margin-bottom: 5px;
 }
-
-#startSongInputSuggestion li.suggestion-item span.suggestion-title {
-  margin-left: 1.2rem;  
-  background:rgba(0,0,0,0.05);
-  margin-right: 2rem;
+#startSongInputSuggestion li.suggestion-item .suggestion-view,
+#startSongInputSuggestion li.suggestion-item .suggestion-uploader
+ {
+  font-size: 9pt;
+  color: #06BD9B;
 }
 
 #newSongInput {
