@@ -40,7 +40,7 @@
   </footer>
   <script>
     var player;
-    
+
     function onYouTubePlayerAPIReady() {
       player = new YT.Player('player-frame', {
         videoId: '0Bmhjf0rKe8',
@@ -57,28 +57,28 @@
 
     function onPlayerStateChange(event) {        
       if(event.data === 0) {          
-        console.log('done');
+        $("#player-frame").trigger("done");
       }
     }
 
     (function() {
-      var USER_CONTROL_WIDTH_EXPANDED = "30%";
-      var USER_CONTROL_WIDTH_COLLAPSED = "1%";
-      var PLAYLIST_DIV = "playlist";
-      var PLAYLIST_SGTION_DIV = "newSongInputSuggestion";
 
       var playlist = [];
 
       $("#startSongInput").focus();
       
       $("#user-control").mouseenter(function() {
-        $("#user-control").css("width", USER_CONTROL_WIDTH_EXPANDED);
+        $("#user-control").css("width", "30%");
         $("#control-wrapper").removeClass("hidden");
       });
       
       $("#user-control").mouseleave(function() {
-        $("#user-control").css("width", USER_CONTROL_WIDTH_COLLAPSED);
+        $("#user-control").css("width", "1%");
         $("#control-wrapper").addClass("hidden");
+      });
+
+      $("#player-frame").on("done", function() {
+        console.log("done video");
       });
 
       $("#startSongInput").keyup(function(event) {
@@ -249,10 +249,10 @@
       }
 
       function updatePlaylistView() {
-        var plDiv = ('#'+PLAYLIST_DIV);
-        var sgDiv = ('#'+PLAYLIST_SGTION_DIV);
+        var plDiv = ("#playlist");
+        var sgDiv = ("#newSongInputSuggestion");
 
-        $(sgDiv).addClass("hidden");
+        $("#newSongInputSuggestion").addClass("hidden");
         $("#newSongInput").val("");
         $("#newSongInputSuggestion").empty();
 
