@@ -23,7 +23,7 @@
     <ul id="startSongInputSuggestion"></ul>
   </div>
   <div id="main-wrapper" ng-controller="MainCtrl">
-    <iframe id="player-frame" frameborder="0" title="YouTube video player" type="text/html" src="//www.youtube.com/embed/u1zgFlCw8Aw?enablejsapi=1"></iframe>
+    <iframe id="player-frame" class="hidden" frameborder="0" title="YouTube video player" type="text/html" src="//www.youtube.com/embed/u1zgFlCw8Aw?enablejsapi=1"></iframe>
     <div id="user-control" class="hidden">
       <div id="control-wrapper">
         <div id="control-title">Play List</div>       
@@ -39,6 +39,191 @@
   </footer>
   <script>
     var player; 
+    var playlist = [];
+
+    (function() {
+      var s = document.createElement("script");
+      s.src = (location.protocol == 'https:' ? 'https' : 'http') + "://www.youtube.com/player_api";
+      var before = document.getElementsByTagName("script")[0];
+      before.parentNode.insertBefore(s, before);
+    })();
+
+    $("#startSongInput").focus();
+    
+    $("#user-control").mouseenter(function() {
+      $("#user-control").css("width", "30%");
+      $("#control-wrapper").removeClass("hidden");
+    });
+    
+    $("#user-control").mouseleave(function() {
+      $("#user-control").css("width", "1%");
+      $("#control-wrapper").addClass("hidden");
+    });
+
+    function updateVideoID(id) {
+      // console.log(YT.PlayerState);
+      // $("#player-frame").attr("src", "//www.youtube.com/embed/"+
+      //   id+
+      //   "?enablejsapi=1&origin=https%3A%2F%2Ftubekara.herokuapp.com");
+      // if (!ready) {        
+      //   player = new YT.Player('player-frame', {
+      //     videoId: id,
+      //     events: {
+      //       'onReady': onPlayerReady,
+      //       'onStateChange': onPlayerStateChange
+      //     }
+      //   });
+      //   ready = true;
+      // }
+      // else {
+        // player.loadVideoById(id);
+      // }
+      console.log(player);
+    }
+
+    $("#startSongInput").keyup(function(event) {
+      var id = $(this).attr("id");
+      var key = (event.keyCode ? event.keyCode : event.which);
+
+      if ([13, 38, 40].indexOf(key) != -1) {
+        handleKeyInput(key, "startSongInputSuggestion", "suggestion-item", "selected");
+        return;
+      }
+
+      var searchInput = $(this).val();
+      updateSuggestion(searchInput, 7, "startSongInputSuggestion");
+    });
+
+    $("#newSongInput").keyup(function(event) {
+      var id = $(this).attr("id");
+      var key = (event.keyCode ? event.keyCode : event.which);
+
+      if ([38, 40].indexOf(key) != -1) {
+        handleKeyInput(key, "newSongInputSuggestion", "suggestion-item", "selected");
+        return;
+      }
+
+      if (key == 13) {
+        var selectedSong = {};
+        if ($("#newSongInputSuggestion li.selected").length != 0) {
+          selectedSong = $("#newSongInputSuggestion li.selected").first();
+        }
+        else {
+          selectedSong = $("#newSongInputSuggestion li.suggestion-item").first();
+        }
+        addSong2Playlist(selectedSong);
+        return;
+      }
+
+      var searchInput = $(this).val();
+      if (searchInput.length >= 1) {
+        if ($("#newSongInputSuggestion").hasClass("hidden")) {
+          $("#newSongInputSuggestion").removeClass("hidden");
+          $("#playlist").addClass("hidden");
+        }
+        updateSuggestion(searchInput, 7, "newSongInputSuggestion");
+      }
+      else {
+        $("#newSongInputSuggestion").addClass("hidden");
+        $("#playlist").removeClass("hidden");
+      }
+    });
+
+    function handleKeyInput(key, suggestionDiv, suggestionItemClass, selectedClass) {      
+      var suggestionDiv = suggestionDiv.indexOf('#') == 0 ? suggestionDiv : ('#'+suggestionDiv);
+      var selectedClass = selectedClass.indexOf('.') == 0 ? selectedClass : ('.'+selectedClass);
+      var suggestionItemClass = suggestionItemClass.indexOf('.') == 0 ? suggestionItemClass : ('.'+suggestionItemClass);
+      var current = $(suggestionDiv+" "+suggestionItemClass).index($(selectedClass));
+      var items = $(suggestionDiv+" "+suggestionItemClass);
+      var selectedItems = $(suggestionDiv+" "+selectedClass);
+
+      if (key == 13) {
+        if (selectedItems.length != 0) {
+          updateVideoID(selectedItems.first().data('id'));
+          addSong2Playlist(selectedItems.first());
+        }
+        else {
+          updateVideoID(items.first().data('id'));
+          addSong2Playlist(items.first().data('id'));
+        }
+        openPlayingPage();
+        return;
+      }
+
+      if (key == 40) {
+        if (current < $(suggestionDiv+" "+suggestionItemClass).length - 1) {
+          $(suggestionDiv+" "+suggestionItemClass).eq(current+1).addClass(selectedClass.substring(1));
+          $(suggestionDiv+" "+suggestionItemClass).eq(current).removeClass(selectedClass.substring(1));
+        }
+        return;
+      }
+
+      if (key == 38) {
+        if (current > 0) {
+          $(suggestionDiv+" "+suggestionItemClass).eq(current).removeClass(selectedClass.substring(1));
+          $(suggestionDiv+" "+suggestionItemClass).eq(current-1).addClass(selectedClass.substring(1));
+        }
+        return;
+      }
+
+    }
+
+    function updateSuggestion(searchInput, maxResult, suggestionDiv) {
+      var keyword= encodeURIComponent(searchInput);
+      var ytURL='//gdata.youtube.com/feeds/api/videos?q='+keyword+'&max-results='+maxResult+'&v=2&alt=jsonc';
+      var suggestionDiv = suggestionDiv.indexOf('#') == 0 ? suggestionDiv : ('#'+suggestionDiv);
+
+      $.ajax
+      ({
+        type: "GET",
+        url: ytURL,
+        dataType:"jsonp",
+        success: function(response)
+        {
+          $(suggestionDiv).empty();
+          if(response.data.items)
+          {
+            $.each(response.data.items, function(i, obj) {
+              $(suggestionDiv).append(
+                "<li data-id='"+obj.id+"' "+
+                  "data-title='"+escapeQuotes(obj.title)+"' "+
+                  "data-uploader='"+obj.uploader+"' "+
+                  "data-view='"+obj.viewCount+"' "+
+                  "data-duration='"+obj.duration+"' "+
+                  " class='suggestion-item'>"+
+                    "<img class='suggestion-img' src='"+getImgFromID(obj.id)+"'>"+
+                    "<span class='suggestion-info'>"+
+                      "<div class='suggestion-title'>"+escapeQuotes(obj.title)+"</div>"+
+                      "<span class='suggestion-uploader'>by "+escapeQuotes(obj.uploader)+"&nbsp;&nbsp;&nbsp;</span>"+
+                      "<span class='suggestion-view'>"+obj.viewCount+" views</span>"+
+                    "</span>"+
+                "</li>"
+                );
+            });
+
+            $(".suggestion-item").first().addClass("selected");
+            $(".suggestion-item").hover(function() {
+              $(this).addClass("selected");
+            }, function() {
+              $(this).removeClass("selected")
+            });
+            $("#startSongInputSuggestion li.suggestion-item").click(function() {
+              addSong2Playlist($(this));
+              playVideo($(this).data('id'));
+              openPlayingPage();
+            });
+            $("#newSongInputSuggestion li.suggestion-item").click(function() {
+              addSong2Playlist($(this));
+            });
+          }
+          else
+          {
+            $(suggestionDiv).append("<li>No match found.</li>");
+          }
+        }
+      });
+
+    }
 
     function getFrameID(id){
       var elem = document.getElementById(id);
@@ -80,23 +265,17 @@
         } else if (typeof func == "function") {
             if (api_isReady) func();
             else onReady_funcs[b_before?"unshift":"push"](func); 
-        }
+        }console.log("APi is ready");
       }
     })();
 
     function onYouTubePlayerAPIReady() {YT_ready(true)}
 
-    (function() {
-      var s = document.createElement("script");
-      s.src = (location.protocol == 'https:' ? 'https' : 'http') + "://www.youtube.com/player_api";
-      var before = document.getElementsByTagName("script")[0];
-      before.parentNode.insertBefore(s, before);
-    })();
-
     YT_ready(function(){
       var frameID = getFrameID("player-frame");
       if (frameID) { //If the frame exists
         player = new YT.Player(frameID, {
+          id: 'u1zgFlCw8Aw',
           events: {
             "onStateChange": stopCycle
           }
@@ -109,6 +288,106 @@
         console.log("Play next video");
       }
       console.log("Video state change " + event.data);
+    }
+
+    function addSong2Playlist(liObj) {
+      $("#newSongInputSuggestion").addClass("hidden");
+      $("#playlist").removeClass("hidden"); 
+      obj = { 'id': liObj.data('id'), 'img': getImgFromID(liObj.data('id')), 
+        'title': liObj.data('title'), 
+        'duration': liObj.data('duration'), 'uploader': liObj.data('uploader'), 
+        'view': liObj.data('view') };
+      playlist.push(obj);
+      updatePlaylistView();  
+      console.log(playlist);
+    }
+
+    function updatePlaylistView() {
+      var plDiv = ("#playlist");
+      var sgDiv = ("#newSongInputSuggestion");
+
+      $("#newSongInputSuggestion").addClass("hidden");
+      $("#newSongInput").val("");
+      $("#newSongInputSuggestion").empty();
+
+      $(plDiv).empty();
+      $.each(playlist, function(i, obj) {
+        $(plDiv).append(
+          "<li data-id='"+obj.id+"'"+" class='playlist-item'>"+
+            "<img class='playlist-item-img' src='"+obj.img+"'>"+
+            "<span class='playlist-item-info'>"+
+              "<div class='playlist-item-title'>"+obj.title+"</div>"+
+              "<span class='playlist-item-uploader'>by "+obj.uploader+"&nbsp;&nbsp;&nbsp;</span>"+
+              "<span class='playlist-item-view'>"+obj.view+" views</span>"+
+            "</span>"+
+          "</li>"
+          );
+      });
+
+      $(".playlist-item").click(function() {
+        playVideo($(this).data('id'));
+      })
+      $(".playlist-item").hover(function() {
+        $(this).addClass("selected");
+      }, function() {
+        $(this).removeClass("selected");
+      });
+    }
+
+    function playVideo(id) {
+      // updateVideoID(id);
+      // $("#player-frame")[0].src += "&autoplay=1";
+    }
+
+    function getImgFromID(id) {
+      return "//img.youtube.com/vi/"+id+"/1.jpg";
+    }
+
+    function openPlayingPage() {
+      height = $("html").height()*0.85;
+      $("html").css('background-image', 'none');
+      $("#search-form").remove();
+      $("#player-frame").removeClass("hidden");
+      $("#player-frame").css("height", height);
+      $("#user-control").removeClass("hidden");
+      $("#user-control").css("height", height);
+      $("body").addClass("stripesDarkBackground");
+      $("#newSongInput").focus();
+      setTimeout(function() {
+        $("#user-control").trigger("mouseleave");
+      }, 1000);
+      $("#add-song-btn").click(function() {
+        var selectedSong = {};
+        if ($("#newSongInputSuggestion li.selected").length != 0) {
+          selectedSong = $("#newSongInputSuggestion li.selected").first();
+        }
+        else {
+          selectedSong = $("#newSongInputSuggestion li.suggestion-item").first();
+        }
+        addSong2Playlist(selectedSong);
+      });
+      // $("#player-frame")[0].src += "&autoplay=1";
+    }
+
+    function escapeQuotes(str) {
+      return (str + '').replace('"', '&#34;').replace("'", '&#39;');
+    }
+
+    function callPlayer(frame_id, func, args) {
+      if (window.jQuery && frame_id instanceof jQuery) frame_id = frame_id.get(0).id;
+      var iframe = document.getElementById(frame_id);
+      if (iframe && iframe.tagName.toUpperCase() != 'IFRAME') {
+        iframe = iframe.getElementsByTagName('iframe')[0];
+      }
+      if (iframe) {
+        // Frame exists, 
+        iframe.contentWindow.postMessage(JSON.stringify({
+            "event": "command",
+            "func": func,
+            "args": args || [],
+            "id": frame_id
+        }), "*");
+      }
     }
 
   </script>
