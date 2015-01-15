@@ -9,7 +9,7 @@
   <meta name="author" content="An Pham">
   <script src="//code.jquery.com/jquery-2.1.3.min.js"></script> 
   <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.8/angular.min.js"></script>
-  <script src="http://www.youtube.com/player_api"></script>
+  <script src="http://www.youtube.com/iframe_api"></script>
   <script src="app.js"></script>
   <script src="controllers/controllers.js"></script>
   <script src="configs/routes.js"></script>  
@@ -41,8 +41,9 @@
   <script>
     var player;
     var playlist = [];
+    var ready = false;
 
-    function onYouTubePlayerAPIReady() {
+    function onYouTubeIframeAPIReady() {
       player = new YT.Player('player-frame', {
         videoId: '0Bmhjf0rKe8',
         events: {
@@ -50,6 +51,7 @@
           'onStateChange': onPlayerStateChange
         }
       });
+      ready = true;
     }
 
     function onPlayerReady(event) {
@@ -228,10 +230,23 @@
     }
 
     function updateVideoID(id) {
-      console.log(player);
+      console.log(YT.PlayerState);
       $("#player-frame").attr("src", "//www.youtube.com/embed/"+
         id+
         "?enablejsapi=1&origin=https%3A%2F%2Ftubekara.herokuapp.com");
+      // if (!ready) {        
+      //   player = new YT.Player('player-frame', {
+      //     videoId: id,
+      //     events: {
+      //       'onReady': onPlayerReady,
+      //       'onStateChange': onPlayerStateChange
+      //     }
+      //   });
+      //   ready = true;
+      // }
+      // else {
+      //   player.loadVideoById(id);
+      // }
     }
 
     function addSong2Playlist(liObj) {
