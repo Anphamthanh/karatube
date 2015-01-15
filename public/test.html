@@ -1,42 +1,115 @@
-<!DOCTYPE html>
-<html>
-  <body>
-    <div id="player"></div>
+<!doctype html>
 
-    <script>
-      var tag = document.createElement('script');
+<html lang="en">
+<head>
+  <meta charset="utf-8">
 
-      tag.src = "https://www.youtube.com/iframe_api";
-      var firstScriptTag = document.getElementsByTagName('script')[0];
-      firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+  <title>TubeKara - YouTube Karaoke Made Easy</title>
+  <meta name="description" content="YouTube Karaoke Made Easy">
+  <meta name="author" content="An Pham">
+  <script src="//code.jquery.com/jquery-2.1.3.min.js"></script> 
+  <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.8/angular.min.js"></script>
+  <script src="app.js"></script>
+  <script src="controllers/controllers.js"></script>
+  <script src="configs/routes.js"></script>  
+  <link rel="stylesheet" type="text/css" href="assets/stylesheets/font-awesome.min.css">
+  <link rel="stylesheet" type="text/css" href="assets/stylesheets/style.css">
+</head>
 
-      var player;
-      function onYouTubeIframeAPIReady() {
-        player = new YT.Player('player', {
-          height: '390',
-          width: '640',
-          videoId: 'M7lc1UVf-VE',
-          events: {
-            'onReady': onPlayerReady,
-            'onStateChange': onPlayerStateChange
-          }
+<body ng-app="TubeKara">
+  <p id="welcome-text" ng-controller="MainCtrl">{{ welcome }}</p>
+  <div id="search-form" ng-controller="MainCtrl">
+    <input ng-model="startSong" type="text" id="startSongInput" autocomplete="off" placeholder="Please enter your song">
+    <ul id="startSongInputSuggestion"></ul>
+  </div>
+  <div id="main-wrapper" ng-controller="MainCtrl">
+    <iframe id="player-frame"frameborder="0" title="YouTube video player"type="text/html"src="http://www.youtube.com/embed/u1zgFlCw8Aw?enablejsapi=1"></iframe>
+    <div id="user-control" class="hidden">
+      <div id="control-wrapper">
+        <div id="control-title">Play List</div>       
+        <input ng-model="newSongInput" type="text" id="newSongInput" placeholder="Please add your next song">
+        <i class="btn fa fa-plus fa-2x" id="add-song-btn"></i>
+        <ul id="newSongInputSuggestion" class="user-list hidden"></ul> 
+        <ul id="playlist" class="user-list"></ul>      
+      </div>
+    </div>
+  </div>
+  <footer id="footer">
+    <p>Developed by <a target="_blank" href="http://www.apresume.com">An Pham</a>. All rights reserved.</p>
+  </footer>
+  <script>
+    function getFrameID(id){
+    var elem = document.getElementById(id);
+    if (elem) {
+        if(/^iframe$/i.test(elem.tagName)) return id; //Frame, OK
+        // else: Look for frame
+        var elems = elem.getElementsByTagName("iframe");
+        if (!elems.length) return null; //No iframe found, FAILURE
+        for (var i=0; i<elems.length; i++) {
+           if (/^https?:\/\/(?:www\.)?youtube(?:-nocookie)?\.com(\/|$)/i.test(elems[i].src)) break;
+        }
+        elem = elems[i]; //The only, or the best iFrame
+        if (elem.id) return elem.id; //Existing ID, return it
+        // else: Create a new ID
+        do { //Keep postfixing `-frame` until the ID is unique
+            id += "-frame";
+        } while (document.getElementById(id));
+        elem.id = id;
+        return id;
+    }
+    // If no element, return null.
+    return null;
+}
+
+// Define YT_ready function.
+var YT_ready = (function() {
+    var onReady_funcs = [], api_isReady = false;
+    /* @param func function     Function to execute on ready
+     * @param func Boolean      If true, all qeued functions are executed
+     * @param b_before Boolean  If true, the func will added to the first
+                                 position in the queue*/
+    return function(func, b_before) {
+        if (func === true) {
+            api_isReady = true;
+            while (onReady_funcs.length) {
+                // Removes the first func from the array, and execute func
+                onReady_funcs.shift()();
+            }
+        } else if (typeof func == "function") {
+            if (api_isReady) func();
+            else onReady_funcs[b_before?"unshift":"push"](func); 
+        }
+    }
+})();
+// This function will be called when the API is fully loaded
+function onYouTubePlayerAPIReady() {YT_ready(true)}
+
+// Load YouTube Frame API
+(function() { // Closure, to not leak to the scope
+  var s = document.createElement("script");
+  s.src = (location.protocol == 'https:' ? 'https' : 'http') + "://www.youtube.com/player_api";
+  var before = document.getElementsByTagName("script")[0];
+  before.parentNode.insertBefore(s, before);
+})();
+var player; //Define a player object, to enable later function calls, without
+            // having to create a new class instance again.
+
+// Add function to execute when the API is ready
+YT_ready(function(){
+    var frameID = getFrameID("player-frame");
+    if (frameID) { //If the frame exists
+        player = new YT.Player(frameID, {
+            events: {
+                "onStateChange": stopCycle
+            }
         });
-      }
+    }
+});
 
-      function onPlayerReady(event) {
-        event.target.playVideo();
-      }
-      
-      var done = false;
-      function onPlayerStateChange(event) {
-        // if (event.data == YT.PlayerState.PLAYING && !done) {
-        //   setTimeout(stopVideo, 6000);
-        //   done = true;
-        // }
-      }
-      function stopVideo() {
-        player.stopVideo();
-      }
-    </script>
-  </body>
+// Example: function stopCycle, bound to onStateChange
+function stopCycle(event) {
+    console.log("onStateChange has fired!\nNew state:" + event.data);
+}
+  </script>
+</body>
 </html>
