@@ -26,7 +26,8 @@ body {
   box-sizing: border-box;
   background-color: #1e1e1e;
   opacity: 0.9;
-  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: scroll;
 }
 
 #control-wrapper {
