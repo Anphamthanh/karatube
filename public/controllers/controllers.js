@@ -14,19 +14,7 @@ tubeKaraApp
       $scope.$apply();
     }
 
-    $scope.addSong2PlaylistAndPlay = function(player, liObj) {
-      addSong2Playlist(liObj);
-      playSong(player, 0);
-    }
-
-    $scope.playNextSong = function(player) {
-      $scope.playlist.splice($scope.currentSongIndex, 1);
-      $scope.$apply();
-      console.log($scope.playlist);console.log($scope.currentSongIndex);
-      playSong(player, $scope.currentSongIndex);
-    }
-
-    function playSong(player, index) {
+    $scope.playSong = function(player, index) {
       if (index >= $scope.playlist.length) {
         console.log("End of Playlist");
         return;
@@ -34,6 +22,17 @@ tubeKaraApp
       player.loadVideoById($scope.playlist[index].id);
       player.playVideo();
       $scope.currentSongIndex = index;
+    }
+
+    $scope.addSong2PlaylistAndPlay = function(player, liObj) {
+      $scope.addSong2Playlist(liObj);
+      $scope.playSong(player, 0);
+    }
+
+    $scope.playNextSong = function(player) {
+      $scope.playlist.splice($scope.currentSongIndex, 1);
+      $scope.$apply();
+      $scope.playSong(player, $scope.currentSongIndex);
     }
 
     getImgFromID = function(id) {
