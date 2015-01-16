@@ -102,9 +102,7 @@
 
       if (key == 13) {
         selectedSong = getSelectedItem("startSongInputSuggestion", "suggestion-item", "selected");
-        updateVideoID(selectedSong.data('id'));
-        addSong2Playlist(selectedSong);
-        openPlayingPage();
+        openPlayingPage(selectedSong);
         return;
       }
 
@@ -221,9 +219,7 @@
               $(this).removeClass("selected")
             });
             $("#startSongInputSuggestion li.suggestion-item").click(function() {
-              addSong2Playlist($(this));
-              play($(this).data('id'));
-              openPlayingPage();
+              openPlayingPage($(this));
             });
             $("#newSongInputSuggestion li.suggestion-item").click(function() {
               addSong2Playlist($(this));
@@ -324,7 +320,7 @@
       });
     }
 
-    function openPlayingPage() {
+    function openPlayingPage(libObj) {
       height = $("html").height()*0.85;
       $("html").css('background-image', 'none');
       $("#search-form").remove();
@@ -339,9 +335,9 @@
       }, 1000);
       $("#add-song-btn").click(function() {
         selectedSong = getSelectedItem("newSongInputSuggestion", "suggestion-item", "selected");
-        $("body").scope().addSong2PlaylistAndPlay(player, selectedSong);
+        $("body").scope().addSong2Playlist(selectedSong);
       });
-      player.playVideo();
+      $("body").scope().addSong2PlaylistAndPlay(player, libObj);
     }
 
     function escapeQuotes(str) {
