@@ -32,11 +32,11 @@
         <ul id="newSongInputSuggestion" class="user-list hidden"></ul>
         <ul id="playlist" class="user-list">
           <li data-id="{{ item.id }}" class='playlist-item' ng-repeat="item in playlist">
-            <img class='playlist-item-img' src="{{ item.img }}">
+            <img class='playlist-item-img' src=" {{ item.img }} ">
             <span class='playlist-item-info'>
-              <div class='playlist-item-title'>{{ item.title }}</div>
-              <span class='playlist-item-uploader'>{{ item.uploader }}&nbsp;&nbsp;&nbsp;</span>"+
-              <span class='playlist-item-view'>{{ item.view }} views</span>
+              <div class='playlist-item-title'> {{ item.title }} </div>
+              <span class='playlist-item-uploader'> {{ item.uploader }} &nbsp;&nbsp;&nbsp;</span>
+              <span class='playlist-item-view'> {{ item.view }} views</span>
             </span>
           </li>
         </ul>      
@@ -70,6 +70,15 @@
 
     function updateVideoID(id) {
       player.loadVideoById(id);
+    }
+
+    function play(id) {
+      updateVideoID(id);
+      player.playVideo();
+    }
+
+    function getImgFromID(id) {
+      return "//img.youtube.com/vi/"+id+"/1.jpg";
     }
 
     $("#startSongInput").keyup(function(event) {
@@ -302,15 +311,6 @@
       }, function() {
         $(this).removeClass("selected");
       });
-    }
-
-    function play(id) {
-      updateVideoID(id);
-      player.playVideo();
-    }
-
-    function getImgFromID(id) {
-      return "//img.youtube.com/vi/"+id+"/1.jpg";
     }
 
     function openPlayingPage() {
