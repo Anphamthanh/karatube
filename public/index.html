@@ -179,6 +179,9 @@
 
     function updateSuggestion(searchInput, maxResult, suggestionDiv) {
       var keyword= encodeURIComponent(searchInput);
+      if (keyword.search("kara") == -1) {
+        keyword = "karaoke " + keyword;
+      }
       var ytURL='//gdata.youtube.com/feeds/api/videos?q='+keyword+'&max-results='+maxResult+'&v=2&alt=jsonc';
       var suggestionDiv = suggestionDiv.indexOf('#') == 0 ? suggestionDiv : ('#'+suggestionDiv);
 
