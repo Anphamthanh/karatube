@@ -75,6 +75,10 @@ body {
   padding: 9px;
 }
 
+.remove-song-btn {
+  color: #f2666d;
+}
+
 #welcome-text {
   margin-left: 1rem;
   font-weight: bold;

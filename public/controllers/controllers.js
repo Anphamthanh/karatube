@@ -35,9 +35,12 @@ tubeKaraApp
     }
 
     $scope.playNextSong = function(player) {
-      $scope.playlist.splice($scope.currentSongIndex, 1);
-      $scope.$apply();
+      $scope.removeSong($scope.currentSongIndex);
       $scope.playSong(player, $scope.currentSongIndex);
+    }
+
+    $scope.removeSong = function(index) {
+      $scope.playlist.splice(index, 1);
     }
 
     getImgFromID = function(id) {
