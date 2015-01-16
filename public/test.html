@@ -23,7 +23,7 @@
     <ul id="startSongInputSuggestion"></ul>
   </div>
   <div id="main-wrapper" ng-controller="MainCtrl">
-    <iframe id="player-frame" class="hidden" frameborder="0" title="YouTube video player" type="text/html" src="//www.youtube.com/embed/u1zgFlCw8Aw?enablejsapi=1"></iframe>
+    <iframe id="player-frame" frameborder="0" title="YouTube video player" type="text/html" src="//www.youtube.com/embed/u1zgFlCw8Aw?enablejsapi=1"></iframe>
     <div id="user-control" class="hidden">
       <div id="control-wrapper">
         <div id="control-title">Play List</div>       
@@ -61,24 +61,8 @@
     });
 
     function updateVideoID(id) {
-      // console.log(YT.PlayerState);
-      // $("#player-frame").attr("src", "//www.youtube.com/embed/"+
-      //   id+
-      //   "?enablejsapi=1&origin=https%3A%2F%2Ftubekara.herokuapp.com");
-      // if (!ready) {        
-      //   player = new YT.Player('player-frame', {
-      //     videoId: id,
-      //     events: {
-      //       'onReady': onPlayerReady,
-      //       'onStateChange': onPlayerStateChange
-      //     }
-      //   });
-      //   ready = true;
-      // }
-      // else {
-        // player.loadVideoById(id);
-      // }
-      console.log(player);
+      console.log("update id " + player);
+      player.loadVideoById(id);
     }
 
     $("#startSongInput").keyup(function(event) {
@@ -209,7 +193,7 @@
             });
             $("#startSongInputSuggestion li.suggestion-item").click(function() {
               addSong2Playlist($(this));
-              playVideo($(this).data('id'));
+              play($(this).data('id'));
               openPlayingPage();
             });
             $("#newSongInputSuggestion li.suggestion-item").click(function() {
@@ -265,7 +249,7 @@
         } else if (typeof func == "function") {
             if (api_isReady) func();
             else onReady_funcs[b_before?"unshift":"push"](func); 
-        }console.log("APi is ready");
+        }
       }
     })();
 
@@ -299,7 +283,6 @@
         'view': liObj.data('view') };
       playlist.push(obj);
       updatePlaylistView();  
-      console.log(playlist);
     }
 
     function updatePlaylistView() {
@@ -325,7 +308,7 @@
       });
 
       $(".playlist-item").click(function() {
-        playVideo($(this).data('id'));
+        play($(this).data('id'));
       })
       $(".playlist-item").hover(function() {
         $(this).addClass("selected");
@@ -334,9 +317,9 @@
       });
     }
 
-    function playVideo(id) {
-      // updateVideoID(id);
-      // $("#player-frame")[0].src += "&autoplay=1";
+    function play(id) {
+      updateVideoID(id);
+      player.playVideo();
     }
 
     function getImgFromID(id) {
@@ -366,7 +349,7 @@
         }
         addSong2Playlist(selectedSong);
       });
-      // $("#player-frame")[0].src += "&autoplay=1";
+      player.playVideo();
     }
 
     function escapeQuotes(str) {
