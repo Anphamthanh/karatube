@@ -294,9 +294,8 @@
 
     function stopCycle(event) {
       if (event.data === 0) {
-        console.log("Play next video");
+        $("body").scope().playNextSong(player);
       }
-      console.log("Video state change " + event.data);
     }
 
     function addSong2Playlist(liObj) {
