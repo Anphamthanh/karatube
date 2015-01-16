@@ -309,6 +309,8 @@
       
       // Re-bind click event to new play playlist item
       $(".playlist-item").click(function() {
+        $(".playing").removeClass("playing");
+        $(this).addClass("playing");
         play($(this).data('id'));
       })
       

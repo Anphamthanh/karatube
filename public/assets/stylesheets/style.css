@@ -85,6 +85,11 @@ body {
   border-radius: 3px;
 }
 
+.playing {
+  background: #3a3a3a;
+  border-radius: 3px;
+}
+
 li.selected span.suggestion-info {
   background: none !important;
 }
