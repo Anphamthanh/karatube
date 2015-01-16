@@ -28,7 +28,7 @@
       <div id="control-wrapper">
         <div id="control-title">Play List</div>       
         <input ng-model="newSongInput" type="text" id="newSongInput" placeholder="Please add your next song">
-        <i class="btn fa fa-plus fa-2x" id="add-song-btn" title="Click to add song."></i>
+        <i class="btn fa fa-plus fa-2x add-btn" id="add-song-btn" title="Click to add song."></i>
         <ul id="newSongInputSuggestion" class="user-list hidden"></ul>
         <ul id="playlist" class="user-list">
           <li data-id="{{ item.id }}" data-index="{{ $index }}" class='playlist-item' ng-repeat="item in playlist">

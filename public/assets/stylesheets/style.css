@@ -79,6 +79,10 @@ body {
   color: #f2666d;
 }
 
+.add-btn {
+  color: #50C752;
+}
+
 #welcome-text {
   margin-left: 1rem;
   font-weight: bold;
