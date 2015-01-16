@@ -147,6 +147,7 @@ li.suggestion-item .suggestion-uploader
   width: 90%;
   cursor: pointer;
   overflow: hidden;
+  margin-bottom: 5px;
 }
 
 .user-list li.playlist-item .playlist-item-img {
