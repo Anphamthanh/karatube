@@ -48,6 +48,7 @@
   </footer>
   <script>
     var player; 
+    var scope = $("body").scope();
 
     $("#startSongInput").focus();
     
@@ -339,7 +340,7 @@
       }, 1000);
       $("#add-song-btn").click(function() {
         selectedSong = getSelectedItem("newSongInputSuggestion", "suggestion-item", "selected");
-        addSong2Playlist(selectedSong);
+        scope.addSong2PlaylistAndPlay(player, selectedSong);
       });
       player.playVideo();
     }
