@@ -32,7 +32,7 @@
         <ul id="newSongInputSuggestion" class="user-list hidden"></ul>
         <ul id="playlist" class="user-list">
           <li data-id="{{ item.id }}" data-index="{{ $index }}" class='playlist-item' ng-repeat="item in playlist">
-            <i class="btn fa fa-minus fa-2x remove-song-btn" ng-click="removeSong($index)" title="Click to remove song."></i>
+            <i class="btn fa fa-minus fa-2x remove-song-btn hidden" ng-click="removeSong($index)" title="Click to remove song."></i>
             <img class='playlist-item-img' src=" {{ item.img }} ">
             <span class='playlist-item-info'>
               <div class='playlist-item-title'> {{ item.title }} </div>
@@ -303,16 +303,22 @@
       $("#newSongInputSuggestion").empty();
       
       // Re-bind click event to new play playlist item
+      setupPlaylistItemEffect();
+    }
+
+    function setupPlaylistItemEffect() {         
       $(".playlist-item").click(function() {
         $(".playing").removeClass("playing");
         $(this).addClass("playing");
         $("body").scope().playSong(player, $(this).data('index'));
-      })
-      
+      });
+
       $(".playlist-item").hover(function() {
         $(this).addClass("selected");
+        $(this).find(".remove-song-btn").show(100);
       }, function() {
         $(this).removeClass("selected");
+        $(this).find(".remove-song-btn").hide(100);
       });
     }
 
@@ -335,6 +341,7 @@
       });
       $("body").scope().addSong2PlaylistAndPlay(player, libObj);
       $("#playlist .playlist-item").first().addClass("playing");
+      setupPlaylistItemEffect();
     }
 
     function escapeQuotes(str) {
