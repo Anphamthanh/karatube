@@ -16,9 +16,17 @@ tubeKaraApp
 
     $scope.addSong2PlaylistAndPlay = function(player, liObj) {
       addSong2Playlist(liObj);
-      player.loadVideoById($scope.playlist[0].id);
+      playSong(player, 0);
+    }
+
+    $scope.playNextSong =function() {
+
+    }
+
+    function playSong(player, index) {
+      player.loadVideoById($scope.playlist[index].id);
       player.playVideo();
-      $scope.currentSongIndex = 0;
+      $scope.currentSongIndex = index;
     }
 
     getImgFromID = function(id) {
