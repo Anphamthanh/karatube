@@ -13,7 +13,7 @@ tubeKaraApp
       $scope.$apply();
     }
 
-    $scope.getImgFromID = function(id) {
+    getImgFromID = function(id) {
       return "//img.youtube.com/vi/"+id+"/1.jpg";
     }
 

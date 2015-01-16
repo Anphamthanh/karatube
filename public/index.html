@@ -11,6 +11,7 @@
   <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.8/angular.min.js"></script>
   <script src="app.js"></script>
   <script src="controllers/controllers.js"></script>
+  <script src="assets/javascripts/jquery.nicescroll.min.js"></script>  
   <script src="configs/routes.js"></script>  
   <link rel="stylesheet" type="text/css" href="assets/stylesheets/font-awesome.min.css">
   <link rel="stylesheet" type="text/css" href="assets/stylesheets/style.css">
@@ -67,6 +68,8 @@
       $("#user-control").css("width", "1%");
       $("#control-wrapper").addClass("hidden");
     });
+
+    // $("html").niceScroll();
 
     function updateVideoID(id) {
       player.loadVideoById(id);
@@ -337,6 +340,7 @@
         addSong2Playlist(selectedSong);
       });
       player.playVideo();
+      // $("#user-control").niceScroll();
     }
 
     function escapeQuotes(str) {
