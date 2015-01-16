@@ -19,8 +19,10 @@ tubeKaraApp
       playSong(player, 0);
     }
 
-    $scope.playNextSong =function(player) {
-      $scope.currentSongIndex += 1;
+    $scope.playNextSong = function(player) {
+      $scope.playlist.splice($scope.currentSongIndex, 1);
+      $scope.$apply();
+      console.log($scope.playlist);console.log($scope.currentSongIndex);
       playSong(player, $scope.currentSongIndex);
     }
 
