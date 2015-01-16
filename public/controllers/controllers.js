@@ -10,7 +10,7 @@ tubeKaraApp
         'duration': liObj.data('duration'), 'uploader': liObj.data('uploader'), 
         'view': liObj.data('view') };
       $scope.playlist.push(obj);  
-      console.log($scope.playlist);
+      $scope.$apply();
     }
 
     $scope.getImgFromID = function(id) {
