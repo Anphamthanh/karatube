@@ -284,42 +284,24 @@
     }
 
     function addSong2Playlist(liObj) {
+
       $("#newSongInputSuggestion").addClass("hidden");
       $("#playlist").removeClass("hidden"); 
-      $("body").scope().addSong2Playlist(liObj);
-      // updatePlaylistView();
-    }
+      $("body").scope().addSong2Playlist(liObj);      
 
-    function updatePlaylistView() {
-      var plDiv = ("#playlist");
-      var sgDiv = ("#newSongInputSuggestion");
-
-      $("#newSongInputSuggestion").addClass("hidden");
       $("#newSongInput").val("");
       $("#newSongInputSuggestion").empty();
-
-      // $(plDiv).empty();
-      // $.each(playlist, function(i, obj) {
-      //   $(plDiv).append(
-      //     "<li data-id='"+obj.id+"'"+" class='playlist-item'>"+
-      //       "<img class='playlist-item-img' src='"+obj.img+"'>"+
-      //       "<span class='playlist-item-info'>"+
-      //         "<div class='playlist-item-title'>"+obj.title+"</div>"+
-      //         "<span class='playlist-item-uploader'>by "+obj.uploader+"&nbsp;&nbsp;&nbsp;</span>"+
-      //         "<span class='playlist-item-view'>"+obj.view+" views</span>"+
-      //       "</span>"+
-      //     "</li>"
-      //     );
-      // });
-
-      // $(".playlist-item").click(function() {
-      //   play($(this).data('id'));
-      // })
-      // $(".playlist-item").hover(function() {
-      //   $(this).addClass("selected");
-      // }, function() {
-      //   $(this).removeClass("selected");
-      // });
+      
+      // Re-bind click event to new play playlist item
+      $(".playlist-item").click(function() {
+        play($(this).data('id'));
+      })
+      
+      $(".playlist-item").hover(function() {
+        $(this).addClass("selected");
+      }, function() {
+        $(this).removeClass("selected");
+      });
     }
 
     function play(id) {
