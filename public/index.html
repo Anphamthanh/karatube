@@ -48,7 +48,6 @@
   </footer>
   <script>
     var player; 
-    var scope = $("body").scope();
 
     $("#startSongInput").focus();
     
@@ -308,7 +307,7 @@
 
       $("#newSongInputSuggestion").addClass("hidden");
       $("#playlist").removeClass("hidden"); 
-      scope.addSong2Playlist(liObj);      
+      $("body").scope().addSong2Playlist(liObj);      
 
       $("#newSongInput").val("");
       $("#newSongInputSuggestion").empty();
@@ -340,7 +339,7 @@
       }, 1000);
       $("#add-song-btn").click(function() {
         selectedSong = getSelectedItem("newSongInputSuggestion", "suggestion-item", "selected");
-        scope.addSong2PlaylistAndPlay(player, selectedSong);
+        $("body").scope().addSong2PlaylistAndPlay(player, selectedSong);
       });
       player.playVideo();
     }
