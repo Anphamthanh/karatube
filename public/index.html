@@ -22,15 +22,24 @@
     <input ng-model="startSong" type="text" id="startSongInput" autocomplete="off" placeholder="Please enter your song">
     <ul id="startSongInputSuggestion"></ul>
   </div>
-  <div id="main-wrapper" ng-controller="MainCtrl">
+  <div id="main-wrapper">
     <iframe id="player-frame" class="transparent" frameborder="0" title="YouTube video player" type="text/html" src="//www.youtube.com/embed/u1zgFlCw8Aw?enablejsapi=1"></iframe>
     <div id="user-control" class="hidden">
       <div id="control-wrapper">
         <div id="control-title">Play List</div>       
         <input ng-model="newSongInput" type="text" id="newSongInput" placeholder="Please add your next song">
         <i class="btn fa fa-plus fa-2x" id="add-song-btn"></i>
-        <ul id="newSongInputSuggestion" class="user-list hidden"></ul> 
-        <ul id="playlist" class="user-list"></ul>      
+        <ul id="newSongInputSuggestion" class="user-list hidden"></ul>
+        <ul id="playlist" class="user-list">
+          <li data-id="{{ item.id }}" class='playlist-item' ng-repeat="item in playlist">
+            <img class='playlist-item-img' src="{{ item.img }}">
+            <span class='playlist-item-info'>
+              <div class='playlist-item-title'>{{ item.title }}</div>
+              <span class='playlist-item-uploader'>{{ item.uploader }}&nbsp;&nbsp;&nbsp;</span>"+
+              <span class='playlist-item-view'>{{ item.view }} views</span>
+            </span>
+          </li>
+        </ul>      
       </div>
     </div>
   </div>
@@ -39,7 +48,6 @@
   </footer>
   <script>
     var player; 
-    var playlist = [];
 
     (function() {
       var s = document.createElement("script");
@@ -279,7 +287,7 @@
       $("#newSongInputSuggestion").addClass("hidden");
       $("#playlist").removeClass("hidden"); 
       $("body").scope().addSong2Playlist(liObj);
-      updatePlaylistView();
+      // updatePlaylistView();
     }
 
     function updatePlaylistView() {
@@ -290,28 +298,28 @@
       $("#newSongInput").val("");
       $("#newSongInputSuggestion").empty();
 
-      $(plDiv).empty();
-      $.each(playlist, function(i, obj) {
-        $(plDiv).append(
-          "<li data-id='"+obj.id+"'"+" class='playlist-item'>"+
-            "<img class='playlist-item-img' src='"+obj.img+"'>"+
-            "<span class='playlist-item-info'>"+
-              "<div class='playlist-item-title'>"+obj.title+"</div>"+
-              "<span class='playlist-item-uploader'>by "+obj.uploader+"&nbsp;&nbsp;&nbsp;</span>"+
-              "<span class='playlist-item-view'>"+obj.view+" views</span>"+
-            "</span>"+
-          "</li>"
-          );
-      });
+      // $(plDiv).empty();
+      // $.each(playlist, function(i, obj) {
+      //   $(plDiv).append(
+      //     "<li data-id='"+obj.id+"'"+" class='playlist-item'>"+
+      //       "<img class='playlist-item-img' src='"+obj.img+"'>"+
+      //       "<span class='playlist-item-info'>"+
+      //         "<div class='playlist-item-title'>"+obj.title+"</div>"+
+      //         "<span class='playlist-item-uploader'>by "+obj.uploader+"&nbsp;&nbsp;&nbsp;</span>"+
+      //         "<span class='playlist-item-view'>"+obj.view+" views</span>"+
+      //       "</span>"+
+      //     "</li>"
+      //     );
+      // });
 
-      $(".playlist-item").click(function() {
-        play($(this).data('id'));
-      })
-      $(".playlist-item").hover(function() {
-        $(this).addClass("selected");
-      }, function() {
-        $(this).removeClass("selected");
-      });
+      // $(".playlist-item").click(function() {
+      //   play($(this).data('id'));
+      // })
+      // $(".playlist-item").hover(function() {
+      //   $(this).addClass("selected");
+      // }, function() {
+      //   $(this).removeClass("selected");
+      // });
     }
 
     function play(id) {
