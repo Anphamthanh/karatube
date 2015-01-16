@@ -49,24 +49,22 @@
   <script>
     var player; 
 
+    $("#startSongInput").focus();
+    
+    $("#user-control").mouseenter(function() {
+      showUserControl();
+    });
+    
+    $("#user-control").mouseleave(function() {
+      hideUserControl();
+    });
+
     (function() {
       var s = document.createElement("script");
       s.src = (location.protocol == 'https:' ? 'https' : 'http') + "://www.youtube.com/player_api";
       var before = document.getElementsByTagName("script")[0];
       before.parentNode.insertBefore(s, before);
     })();
-
-    $("#startSongInput").focus();
-    
-    $("#user-control").mouseenter(function() {
-      $("#user-control").css("width", "30%");
-      $("#control-wrapper").removeClass("hidden");
-    });
-    
-    $("#user-control").mouseleave(function() {
-      $("#user-control").css("width", "1%");
-      $("#control-wrapper").addClass("hidden");
-    });
 
     function updateVideoID(id) {
       player.loadVideoById(id);
@@ -75,6 +73,16 @@
     function play(id) {
       updateVideoID(id);
       player.playVideo();
+    }
+
+    function showUserControl() {      
+      $("#user-control").css("width", "30%");
+      $("#control-wrapper").removeClass("hidden");
+    }
+
+    function hideUserControl() {      
+      $("#user-control").css("width", "1%");
+      $("#control-wrapper").addClass("hidden");
     }
 
     function getImgFromID(id) {
@@ -126,6 +134,11 @@
         selectedSong = getSelectedItem("newSongInputSuggestion", "suggestion-item", "selected");
         addSong2Playlist(selectedSong);
         return;
+      }
+
+      if (key == 27) {
+        $("#newSongInput").val("");
+        hideUserControl();
       }
 
       var searchInput = $(this).val();
