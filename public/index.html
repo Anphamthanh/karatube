@@ -93,14 +93,9 @@
       }
 
       if (key == 13) {
-        if (selectedItems.length != 0) {
-          updateVideoID(selectedItems.first().data('id'));
-          addSong2Playlist(selectedItems.first());
-        }
-        else {
-          updateVideoID(items.first().data('id'));
-          addSong2Playlist(items.first().data('id'));
-        }
+        selectedSong = getSelectedItem("startSongInputSuggestion", "suggestion-item", "selected");
+        updateVideoID(selectedSong.data('id'));
+        addSong2Playlist(selectedSong);
         openPlayingPage();
         return;
       }
@@ -108,6 +103,15 @@
       var searchInput = $(this).val();
       updateSuggestion(searchInput, 7, "startSongInputSuggestion");
     });
+
+    function getSelectedItem(ulDiv, liDiv, selectedClass) {
+      var items = $("#"+ulDiv+" ."+liDiv);
+      var selectedItems = $("#"+ulDiv+" ."+selectedClass);
+      if (selectedItems.length != 0) {
+        return selectedItems.first();
+      }
+      return items.first();
+    }
 
     $("#newSongInput").keyup(function(event) {
       var id = $(this).attr("id");
@@ -118,14 +122,8 @@
         return;
       }
 
-      if (key == 13) {
-        var selectedSong = {};
-        if ($("#newSongInputSuggestion li.selected").length != 0) {
-          selectedSong = $("#newSongInputSuggestion li.selected").first();
-        }
-        else {
-          selectedSong = $("#newSongInputSuggestion li.suggestion-item").first();
-        }
+      if (key == 13) {        
+        selectedSong = getSelectedItem("newSongInputSuggestion", "suggestion-item", "selected");
         addSong2Playlist(selectedSong);
         return;
       }
@@ -327,13 +325,7 @@
         $("#user-control").trigger("mouseleave");
       }, 1000);
       $("#add-song-btn").click(function() {
-        var selectedSong = {};
-        if ($("#newSongInputSuggestion li.selected").length != 0) {
-          selectedSong = $("#newSongInputSuggestion li.selected").first();
-        }
-        else {
-          selectedSong = $("#newSongInputSuggestion li.suggestion-item").first();
-        }
+        selectedSong = getSelectedItem("newSongInputSuggestion", "suggestion-item", "selected");
         addSong2Playlist(selectedSong);
       });
       player.playVideo();
