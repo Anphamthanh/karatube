@@ -286,6 +286,9 @@
 
     function videoStateChanged(event) {
       if (event.data === 0) {
+        temp = $(".playing");
+        temp.removeClass("playing");
+        temp.next().addClass("playing");
         $("body").scope().playNextSong(player);
       }
     }
