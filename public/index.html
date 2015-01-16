@@ -48,9 +48,8 @@
     <p>Developed by <a target="_blank" href="http://www.apresume.com">An Pham</a>. All rights reserved.</p>
   </footer>
   <script>
-  
-    if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
-      $("body").scope().updateWelcomeText("This app does NOT support your device. Please use either a desktop or a laptop.");
+    if(window.screen.availWidth < 1200) {
+      $("#welcome-text").text("This app does NOT support your device. Please use either a desktop or a laptop.");
     }
 
     var player; 
