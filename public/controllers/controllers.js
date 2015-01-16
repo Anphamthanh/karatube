@@ -16,8 +16,13 @@ tubeKaraApp
 
     $scope.playSong = function(player, index) {
       if (index >= $scope.playlist.length) {
-        console.log("End of Playlist");
-        return;
+        console.log("End of playlist!");
+        if ($scope.playlist.length != 0) {
+          index = 0;
+        }
+        else {
+          return;
+        }
       }
       player.loadVideoById($scope.playlist[index].id);
       player.playVideo();
