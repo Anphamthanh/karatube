@@ -44,6 +44,10 @@ tubeKaraApp
       $scope.$apply();
     }
 
+    $scope.updateWelcomeText = function(str) {
+      $scope.welcome = str;
+    }
+
     getImgFromID = function(id) {
       return "//img.youtube.com/vi/"+id+"/1.jpg";
     }
