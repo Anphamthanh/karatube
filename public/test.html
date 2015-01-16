@@ -23,7 +23,7 @@
     <ul id="startSongInputSuggestion"></ul>
   </div>
   <div id="main-wrapper" ng-controller="MainCtrl">
-    <iframe id="player-frame" frameborder="0" title="YouTube video player" type="text/html" src="//www.youtube.com/embed/u1zgFlCw8Aw?enablejsapi=1"></iframe>
+    <iframe id="player-frame" class="transparent" frameborder="0" title="YouTube video player" type="text/html" src="//www.youtube.com/embed/u1zgFlCw8Aw?enablejsapi=1"></iframe>
     <div id="user-control" class="hidden">
       <div id="control-wrapper">
         <div id="control-title">Play List</div>       
@@ -330,7 +330,7 @@
       height = $("html").height()*0.85;
       $("html").css('background-image', 'none');
       $("#search-form").remove();
-      $("#player-frame").removeClass("hidden");
+      $("#player-frame").removeClass("transparent");
       $("#player-frame").css("height", height);
       $("#user-control").removeClass("hidden");
       $("#user-control").css("height", height);
