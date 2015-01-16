@@ -41,6 +41,7 @@ tubeKaraApp
 
     $scope.removeSong = function(index) {
       $scope.playlist.splice(index, 1);
+      $scope.$apply();
     }
 
     getImgFromID = function(id) {
