@@ -62,6 +62,13 @@ karaTubeApp
       }
     }
 
+    $scope.getCurrentSongName = function() {
+      if (typeof $scope.playlist[$scope.currentSongIndex] != 'undefined') {
+        return $scope.playlist[$scope.currentSongIndex].title;
+      }
+      return "undefined";
+    }
+
     getImgFromID = function(id) {
       return "//img.youtube.com/vi/"+id+"/1.jpg";
     }

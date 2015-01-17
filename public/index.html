@@ -28,6 +28,7 @@
     <input ng-model="startSong" type="text" id="startSongInput" autocomplete="off" placeholder="Please enter your song">
     <ul id="startSongInputSuggestion"></ul>
   </span>
+  <div class="info hidden"><strong>Playing:</strong> {{ getCurrentSongName() }}</div>
   <div id="main-wrapper">
     <iframe id="player-frame" class="transparent" frameborder="0" title="YouTube video player" type="text/html" src="//www.youtube.com/embed/qpgTC9MDx1o?enablejsapi=1" allowfullscreen="true"></iframe>
     <div id="user-control" class="hidden">
