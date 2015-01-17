@@ -52,6 +52,10 @@ body {
   color: #16BAA0;
 }
 
+.fa {
+  margin-right: 5px;
+}
+
 .right-corner {
   float: right;
   width: 40%;
