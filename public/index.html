@@ -92,6 +92,22 @@
       return "//img.youtube.com/vi/"+id+"/1.jpg";
     }
 
+    function suggestionOn() {
+      if ($("#newSongInputSuggestion").hasClass("hidden")) {
+        $("#control-title .list-title").text(" Suggestion");
+        $("#newSongInputSuggestion").removeClass("hidden");
+        $("#playlist").addClass("hidden");
+      }
+    }
+
+    function playlistOn() {
+      if ($("#playlist").hasClass("hidden")) {
+        $("#playlist").removeClass("hidden");
+        $("#control-title .list-title").text(" Playlist");
+        $("#newSongInputSuggestion").addClass("hidden");
+      }      
+    }
+
     $("#startSongInput").keyup(function(event) {
       var id = $(this).attr("id");
       var key = (event.keyCode ? event.keyCode : event.which);
@@ -145,17 +161,11 @@
       var searchInput = $(this).val();
       if (searchInput.length >= 1) {
         showUserControl();
-        if ($("#newSongInputSuggestion").hasClass("hidden")) {
-          $("#control-title .list-title").text(" Suggestion");
-          $("#newSongInputSuggestion").removeClass("hidden");
-          $("#playlist").addClass("hidden");
-        }
+        suggestionOn();
         updateSuggestion(searchInput, 7, "newSongInputSuggestion");
       }
       else {
-        $("#newSongInputSuggestion").addClass("hidden");
-        $("#playlist").removeClass("hidden");
-        $("#control-title .list-title").text(" Playlist");
+        playlistOn();
       }
     });
 
@@ -312,9 +322,7 @@
     }
 
     function addSong2Playlist(liObj) {
-      $("#newSongInputSuggestion").addClass("hidden");
-      $("#control-title .list-title").text(" Playlist");
-      $("#playlist").removeClass("hidden"); 
+      playlistOn(); 
       $("body").scope().addSong2Playlist(liObj);      
 
       $("#newSongInput").val("");
