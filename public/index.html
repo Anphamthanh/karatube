@@ -32,7 +32,7 @@
     <iframe id="player-frame" class="transparent" frameborder="0" title="YouTube video player" type="text/html" src="//www.youtube.com/embed/u1zgFlCw8Aw?enablejsapi=1" allowfullscreen="true"></iframe>
     <div id="user-control" class="hidden">
       <div id="control-wrapper">
-        <div id="control-title"><i class="fa fa-list"></i>&nbsp;Play List</div>       
+        <div id="control-title"><i class="fa fa-list"></i><span class="list-title">&nbsp;Play List</span></div>       
         <ul id="newSongInputSuggestion" class="user-list hidden"></ul>
         <ul id="playlist" class="user-list">
           <li data-id="{{ item.id }}" data-index="{{ $index }}" class='playlist-item' ng-repeat="item in playlist">
@@ -146,6 +146,7 @@
       if (searchInput.length >= 1) {
         showUserControl();
         if ($("#newSongInputSuggestion").hasClass("hidden")) {
+          $("#control-title .list-title").text(" Suggestion");
           $("#newSongInputSuggestion").removeClass("hidden");
           $("#playlist").addClass("hidden");
         }
@@ -154,6 +155,7 @@
       else {
         $("#newSongInputSuggestion").addClass("hidden");
         $("#playlist").removeClass("hidden");
+        $("#control-title .list-title").text(" Playlist");
       }
     });
 
@@ -311,6 +313,7 @@
 
     function addSong2Playlist(liObj) {
       $("#newSongInputSuggestion").addClass("hidden");
+      $("#control-title .list-title").text(" Playlist");
       $("#playlist").removeClass("hidden"); 
       $("body").scope().addSong2Playlist(liObj);      
 
