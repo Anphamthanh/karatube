@@ -1,8 +1,8 @@
 {
-  "name": "TubeKara App",
+  "name": "KaraTube App",
   "description": "Youtube karaoke made easy.",
   "author": "An Pham",
   "repository": "",
   "logo": "",
-  "keywords": ["node", "express", "youtube", "karaoke", "An Pham", "Anphamthanh"]
+  "keywords": ["node", "express", "youtube", "karaoke", "An Pham", "Anphamthanh", "karatube", "youtube karaoke"]
 }

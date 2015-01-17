@@ -1,1 +1,1 @@
-var tubeKaraApp = angular.module('TubeKara', []);
+var karaTubeApp = angular.module('KaraTube', []);
