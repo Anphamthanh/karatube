@@ -44,6 +44,11 @@ body {
   border: 1px solid #95B5C2;
 }
 
+.right-corner {
+  float: right;
+  width: 40%;
+}
+
 #control-title {
   height:2rem;
   font-weight: bold;
@@ -86,6 +91,8 @@ body {
 #welcome-text {
   margin-left: 1rem;
   font-weight: bold;
+  width: 50%;
+  display: inline-block;
 }
 
 .selected {

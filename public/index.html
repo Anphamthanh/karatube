@@ -17,18 +17,22 @@
 </head>
 
 <body ng-controller="MainCtrl">
-  <p id="welcome-text">{{ welcome }}</p>
-  <div id="search-form">
+  <div class="topbar">
+    <p id="welcome-text">{{ welcome }}</p>
+    <span id="song-input" class="right-corner hidden">
+      <input ng-model="newSongInput" type="text" id="newSongInput" placeholder="Please add your next song">
+      <i class="btn fa fa-plus fa-2x add-btn" id="add-song-btn" title="Click to add song."></i>
+    </span>
+  </div>
+  <span id="search-form">
     <input ng-model="startSong" type="text" id="startSongInput" autocomplete="off" placeholder="Please enter your song">
     <ul id="startSongInputSuggestion"></ul>
-  </div>
+  </span>
   <div id="main-wrapper">
     <iframe id="player-frame" class="transparent" frameborder="0" title="YouTube video player" type="text/html" src="//www.youtube.com/embed/u1zgFlCw8Aw?enablejsapi=1" allowfullscreen="true"></iframe>
     <div id="user-control" class="hidden">
       <div id="control-wrapper">
         <div id="control-title"><i class="fa fa-list"></i>&nbsp;Play List</div>       
-        <input ng-model="newSongInput" type="text" id="newSongInput" placeholder="Please add your next song">
-        <i class="btn fa fa-plus fa-2x add-btn" id="add-song-btn" title="Click to add song."></i>
         <ul id="newSongInputSuggestion" class="user-list hidden"></ul>
         <ul id="playlist" class="user-list">
           <li data-id="{{ item.id }}" data-index="{{ $index }}" class='playlist-item' ng-repeat="item in playlist">
@@ -48,6 +52,7 @@
     <p>Developed by <a target="_blank" href="http://www.apresume.com">An Pham</a>. All rights reserved.</p>
   </footer>
   <script>
+
     if(window.screen.availWidth < 1200) {
       $("#welcome-text").text("This app does NOT support your device. Please use either a desktop or a laptop.");
       $("#welcome-text").css("color", "#f2666d");
@@ -126,7 +131,7 @@
         return;
       }
 
-      if (key == 13) {        
+      if (key == 13) { 
         selectedSong = getSelectedItem("newSongInputSuggestion", "suggestion-item", "selected");
         addSong2Playlist(selectedSong);
         return;
@@ -139,6 +144,7 @@
 
       var searchInput = $(this).val();
       if (searchInput.length >= 1) {
+        showUserControl();
         if ($("#newSongInputSuggestion").hasClass("hidden")) {
           $("#newSongInputSuggestion").removeClass("hidden");
           $("#playlist").addClass("hidden");
@@ -340,6 +346,7 @@
       $("#user-control").removeClass("hidden");
       $("#user-control").css("height", height);
       $("body").addClass("stripesDarkBackground");
+      $("#song-input").removeClass("hidden");
       $("#newSongInput").focus();
       setTimeout(function() {
         $("#user-control").trigger("mouseleave");
