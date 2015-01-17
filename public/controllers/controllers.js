@@ -48,6 +48,20 @@ karaTubeApp
       $scope.welcome = str;
     }
 
+    $scope.getNextSongName = function() {
+      if ($scope.currentSongIndex+1 >= $scope.playlist.length) {
+        if ($scope.playlist.length != 0) {
+          return $scope.playlist[0].title;
+        }
+        else {
+          return "Please add more song to your playlist."
+        }
+      }
+      else {
+        return $scope.playlist[$scope.currentSongIndex+1].title;
+      }
+    }
+
     getImgFromID = function(id) {
       return "//img.youtube.com/vi/"+id+"/1.jpg";
     }

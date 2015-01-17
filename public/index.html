@@ -47,7 +47,8 @@
         </ul>      
       </div>
     </div>
-  </div>
+  </div>  
+  <div class="info hidden"><strong>Next song:</strong> {{ getNextSongName() }}</div>
   <footer id="footer">
     <p>Developed by <a target="_blank" href="http://www.apresume.com">An Pham</a>. All rights reserved.</p>
   </footer>
@@ -358,6 +359,7 @@
       $("#user-control").css("height", height);
       $("body").addClass("stripesDarkBackground");
       $("#song-input").removeClass("hidden");
+      $(".info").removeClass("hidden");
       $("#newSongInput").focus();
       setTimeout(function() {
         $("#user-control").trigger("mouseleave");
