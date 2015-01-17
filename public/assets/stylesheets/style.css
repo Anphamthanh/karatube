@@ -21,6 +21,7 @@ body {
 
 #main-wrapper {
   position: relative;
+  padding: 0;
 }
 
 #user-control {
