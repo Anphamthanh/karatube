@@ -126,7 +126,7 @@
       }
 
       var searchInput = $(this).val();
-      updateSuggestion(searchInput, 7, "startSongInputSuggestion");
+      updateSuggestion(searchInput, 10, "startSongInputSuggestion");
     });
 
     function getSelectedItem(ulDiv, liDiv, selectedClass) {
@@ -162,7 +162,7 @@
       if (searchInput.length >= 1) {
         showUserControl();
         suggestionOn();
-        updateSuggestion(searchInput, 7, "newSongInputSuggestion");
+        updateSuggestion(searchInput, 10, "newSongInputSuggestion");
       }
       else {
         playlistOn();
