@@ -18,7 +18,7 @@
 
 <body ng-controller="MainCtrl">
   <div class="topbar">
-    <p id="welcome-text">{{ welcome }}</p>
+    <p id="welcome-text">Welcome to KaraTube 0.1.0! YouTube Karaoke is now on a different level!...</p>
     <span id="song-input" class="right-corner hidden">
       <input ng-model="newSongInput" type="text" id="newSongInput" placeholder="Please add your next song">
       <i class="btn fa fa-plus fa-2x add-btn" id="add-song-btn" title="Click to add song."></i>
@@ -28,7 +28,6 @@
     <input ng-model="startSong" type="text" id="startSongInput" autocomplete="off" placeholder="Please enter your song">
     <ul id="startSongInputSuggestion"></ul>
   </span>
-  <div class="info hidden"><strong><i class="fa fa-play"></i>Playing:</strong> {{ getCurrentSongName() }}</div>
   <div id="main-wrapper">
     <iframe id="player-frame" class="transparent" frameborder="0" title="YouTube video player" type="text/html" src="//www.youtube.com/embed/qpgTC9MDx1o?enablejsapi=1" allowfullscreen="true"></iframe>
     <div id="user-control" class="hidden">
@@ -49,7 +48,7 @@
       </div>
     </div>
   </div>  
-  <div class="info hidden"><strong><i class="fa fa-fast-forward"></i>Next song:</strong> {{ getNextSongName() }}</div>
+  <span class="info hidden">Next song:<strong> {{ getNextSongName() }} </strong></span>
   <footer id="footer">
     <p>Developed by <a target="_blank" href="http://www.apresume.com">An Pham</a>. All rights reserved.</p>
   </footer>
@@ -359,6 +358,7 @@
       $("#user-control").removeClass("hidden");
       $("#user-control").css("height", height);
       $("body").addClass("stripesDarkBackground");
+      $("#welcome-text").text("KaraTube 0.1.0");
       $("#song-input").removeClass("hidden");
       $(".info").removeClass("hidden");
       $("#newSongInput").focus();

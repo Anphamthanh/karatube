@@ -49,7 +49,6 @@ body {
 
 .info {
   line-height: 2rem;
-  color: #16BAA0;
 }
 
 .fa {
@@ -100,9 +99,10 @@ body {
 
 #welcome-text {
   margin-left: 1rem;
-  font-weight: bold;
   width: 50%;
   display: inline-block;
+  color: #50EBD2;
+  font-weight: bold;
 }
 
 .selected {
