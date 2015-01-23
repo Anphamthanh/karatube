@@ -66,8 +66,9 @@ body {
 }
 
 #footer {
-  float: right;
-  margin-right: 2rem;
+  position: absolute;
+  right: 2rem;
+  bottom: 9px;
 }
 
 #footer a, #footer a:visited {
