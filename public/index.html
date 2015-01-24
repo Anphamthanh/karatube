@@ -334,7 +334,7 @@
 
     function addSong2Playlist(liObj) {
       playlistOn(); 
-      $("body").scope().addSong2Playlist(liObj);      
+      $("body").scope().addSong2Playlist(player, liObj);      
 
       $("#newSongInput").val("");
       $("#newSongInputSuggestion").empty();
@@ -376,7 +376,7 @@
         selectedSong = getSelectedItem("newSongInputSuggestion", "suggestion-item", "selected");
         addSong2Playlist(selectedSong);
       });
-      $("body").scope().addSong2PlaylistAndPlay(player, libObj);
+      $("body").scope().addSong2Playlist(player, libObj);
       $("#playlist .playlist-item").first().addClass("playing");
       setupPlaylistItemEffect();
     }

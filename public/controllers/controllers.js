@@ -5,12 +5,15 @@ karaTubeApp
     $scope.currentSongIndex = 0;
     $scope.nextSong = "Please add more song to your playlist.";
 
-    $scope.addSong2Playlist = function(liObj) {
+    $scope.addSong2Playlist = function(player, liObj) {
       obj = { 'id': liObj.data('id'), 'img': getImgFromID(liObj.data('id')), 
         'title': liObj.data('title'), 
         'duration': liObj.data('duration'), 'uploader': liObj.data('uploader'), 
         'view': liObj.data('view') };
       $scope.playlist.push(obj);  
+      if ($scope.playlist.length == 1) {
+        $scope.playSong(player, 0);
+      }
       $scope.setNextSongName();
       $scope.$apply();
     }
@@ -28,11 +31,6 @@ karaTubeApp
       player.playVideo();
       $scope.currentSongIndex = index;
       $scope.setNextSongName();
-    }
-
-    $scope.addSong2PlaylistAndPlay = function(player, liObj) {
-      $scope.addSong2Playlist(liObj);
-      $scope.playSong(player, 0);
     }
 
     $scope.playNextSong = function(player) {
