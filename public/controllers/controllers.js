@@ -5,7 +5,7 @@ karaTubeApp
     $scope.currentSongIndex = -1;
     $scope.nextSongIndex = -1;
     $scope.shuffle = false;
-    $scope.nextSongName = "Please add more song to your playlist.";
+    $scope.nextSongName = "Please add more songs to your playlist.";
 
     $scope.addSong2Playlist = function(player, liObj) {
       obj = { 'id': liObj.data('id'), 'img': getImgFromID(liObj.data('id')), 
