@@ -55,7 +55,6 @@ karaTubeApp
       else {
         if ($scope.shuffle == false) {
           $scope.nextSongIndex = ($scope.currentSongIndex + 1) % $scope.playlist.length;
-          console.log($scope.nextSongIndex);
         }
         else {
 
@@ -66,20 +65,22 @@ karaTubeApp
 
 
     $scope.playNextSong = function(player) {
-      $scope.removeSong($scope.currentSongIndex);
+      temp = $scope.currentSongIndex;
+      $scope.currentSongIndex = $scope.nextSongIndex;
+      $scope.removeSong(temp);
       $scope.playSong(player, $scope.currentSongIndex);
-      $scope.setNextSongName();
+      $scope.updateNextSong();
     }
 
     $scope.removeSong = function(index) {
       if ($scope.currentSongIndex == index) {
         return;
       }
-      if ($scope.nextSongIndex == index) {
-        $scope.updateNextSong();
-      }
       $scope.playlist.splice(index, 1);
-      $scope.$apply();
+      if ($scope.nextSongIndex > index) {
+        $scope.nextSongIndex -= 1;
+      }
+      $scope.setNextSongName();
     }
 
     getImgFromID = function(id) {
