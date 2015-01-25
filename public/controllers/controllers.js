@@ -3,8 +3,9 @@ karaTubeApp
 .controller('MainCtrl', ['$scope', function($scope) {
     $scope.playlist = [];
     $scope.currentSongIndex = -1;
-    $scope.nextSong = "Please add more song to your playlist.";
-    $scope.nextSongIndex = -1
+    $scope.nextSongIndex = -1;
+    $scope.shuffle = false;
+    $scope.nextSongName = "Please add more song to your playlist.";
 
     $scope.addSong2Playlist = function(player, liObj) {
       obj = { 'id': liObj.data('id'), 'img': getImgFromID(liObj.data('id')), 
@@ -17,13 +18,23 @@ karaTubeApp
       }
       else if ($scope.playlist.length == 2) {
         $scope.nextSongIndex = 1;
-        $scope.nextSong = $scope.playlist[1].title;
+        $scope.setNextSongName();
+      }
+      $scope.$apply();
+    }
+
+    $scope.setNextSongName = function() {
+      if ($scope.nextSongIndex == -1) {
+        $scope.nextSongName = "Please add more song to your playlist.";
+      }
+      else {
+        $scope.nextSongName = $scope.playlist[$scope.nextSongIndex].title;
       }
       $scope.$apply();
     }
 
     $scope.playSong = function(player, index) {
-      if (index >= $scope.playlist.length) {
+      if (index < 0 || index >= $scope.playlist.length) {
         if ($scope.playlist.length != 0) {
           index = 0;
         }
@@ -34,6 +45,22 @@ karaTubeApp
       player.loadVideoById($scope.playlist[index].id);
       player.playVideo();
       $scope.currentSongIndex = index;
+      $scope.updateNextSong();
+    }
+
+    $scope.updateNextSong = function() {
+      if ($scope.playlist.length <= 1) {
+        $scope.nextSongIndex = -1;
+      }
+      else {
+        if ($scope.shuffle == false) {
+          $scope.nextSongIndex = ($scope.currentSongIndex + 1) % $scope.playlist.length;
+          console.log($scope.nextSongIndex);
+        }
+        else {
+
+        }
+      }
       $scope.setNextSongName();
     }
 
@@ -45,36 +72,14 @@ karaTubeApp
     }
 
     $scope.removeSong = function(index) {
+      if ($scope.currentSongIndex == index) {
+        return;
+      }
+      if ($scope.nextSongIndex == index) {
+        $scope.updateNextSong();
+      }
       $scope.playlist.splice(index, 1);
       $scope.$apply();
-    }
-
-    $scope.setNextSongName = function() {
-      if ($scope.getNextSong() == null) {
-        $scope.nextSong = "Please add more song to your playlist.";
-      }
-      else {
-        $scope.nextSong = $scope.getNextSong().title;
-      }
-    }
-
-    $scope.getNextSong = function() {
-      if ($scope.currentSongIndex+1 >= $scope.playlist.length) {
-        if ($scope.playlist.length != 0) {
-          if ($scope.playlist.length == 1) {
-            return null;
-          }
-          else {
-            return $scope.playlist[0];
-          }
-        }
-        else {
-          return null;
-        }
-      }
-      else {
-        return $scope.playlist[$scope.currentSongIndex+1];
-      }
     }
 
     getImgFromID = function(id) {
