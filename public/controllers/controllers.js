@@ -2,8 +2,9 @@
 karaTubeApp
 .controller('MainCtrl', ['$scope', function($scope) {
     $scope.playlist = [];
-    $scope.currentSongIndex = 0;
+    $scope.currentSongIndex = -1;
     $scope.nextSong = "Please add more song to your playlist.";
+    $scope.nextSongIndex = -1
 
     $scope.addSong2Playlist = function(player, liObj) {
       obj = { 'id': liObj.data('id'), 'img': getImgFromID(liObj.data('id')), 
@@ -14,7 +15,10 @@ karaTubeApp
       if ($scope.playlist.length == 1) {
         $scope.playSong(player, 0);
       }
-      $scope.setNextSongName();
+      else if ($scope.playlist.length == 2) {
+        $scope.nextSongIndex = 1;
+        $scope.nextSong = $scope.playlist[1].title;
+      }
       $scope.$apply();
     }
 
@@ -32,6 +36,7 @@ karaTubeApp
       $scope.currentSongIndex = index;
       $scope.setNextSongName();
     }
+
 
     $scope.playNextSong = function(player) {
       $scope.removeSong($scope.currentSongIndex);
