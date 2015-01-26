@@ -20,26 +20,28 @@ karaTubeApp
       $scope.playlist.push(obj);  
       if ($scope.playlist.length == 1) {
         $scope.playSong(0);
+        $scope.nextSongIndex = -1;
       }
-      else if ($scope.playlist.length == 2) {
-        $scope.nextSongIndex = 1;
-        $scope.setNextSongName();
+      else {
+        $scope.updateNextSong();
       }
       $scope.$apply();
     }
 
-    $scope.setNextSongName = function() {
-      if ($scope.nextSongIndex == -1) {
+    $scope.updateNextSong = function() {
+      if ($scope.playlist.length <= 1) {
+        $scope.nextSongIndex = -1;
         $scope.nextSongName = "Please add more song to your playlist.";
       }
       else {
-        $scope.nextSongName = $scope.playlist[$scope.nextSongIndex].title;
-      }
-    }
+        if ($scope.shuffle == false) {
+          $scope.nextSongIndex = ($scope.currentSongIndex + 1) % $scope.playlist.length;
+        }
+        else {
 
-    $scope.getNextSongName = function() {
-      $scope.setNextSongName();
-      return $scope.nextSongName;
+        }
+      $scope.nextSongName = $scope.playlist[$scope.nextSongIndex].title;
+      }
     }
 
     $scope.playSong = function(index) {
@@ -55,21 +57,6 @@ karaTubeApp
       $scope.player.playVideo();
       $scope.currentSongIndex = index;
       $scope.updateNextSong();
-    }
-
-    $scope.updateNextSong = function() {
-      if ($scope.playlist.length <= 1) {
-        $scope.nextSongIndex = -1;
-      }
-      else {
-        if ($scope.shuffle == false) {
-          $scope.nextSongIndex = ($scope.currentSongIndex + 1) % $scope.playlist.length;
-        }
-        else {
-
-        }
-      }
-      $scope.setNextSongName();
     }
 
 
