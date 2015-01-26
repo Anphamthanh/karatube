@@ -60,15 +60,6 @@ karaTubeApp
       $scope.updateNextSong();
     }
 
-
-    $scope.playNextSong = function() {
-      temp = $scope.currentSongIndex;
-      $scope.currentSongIndex = $scope.nextSongIndex;
-      $scope.removeSong(temp);
-      $scope.playSong($scope.currentSongIndex);
-      $scope.updateNextSong();
-    }
-
     $scope.removeSong = function(index) {
       if ($scope.currentSongIndex == index) {
         return;
@@ -78,6 +69,17 @@ karaTubeApp
         $scope.nextSongIndex -= 1;
       }
       $scope.setNextSongName();
+    }
+
+
+    $scope.playNextSong = function() {
+      temp = $scope.currentSongIndex;
+      curr = $scope.nextSongIndex;
+      // $scope.currentSongIndex = $scope.nextSongIndex;
+      // $scope.removeSong(temp);
+      $scope.playSong($scope.nextSongIndex);
+      $scope.updateNextSong();
+      return curr;
     }
 
     getImgFromID = function(id) {

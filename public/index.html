@@ -324,10 +324,9 @@
 
     function videoStateChanged(event) {
       if (event.data === 0) {
-        temp = $(".playing");
-        temp.removeClass("playing");
-        temp.next().addClass("playing");
-        $("body").scope().playNextSong();
+        $(".playing").removeClass("playing");
+        current = $("body").scope().playNextSong();
+        $(".playlist-item").eq(parseInt(current)).addClass("playing");
       }
     }
 
