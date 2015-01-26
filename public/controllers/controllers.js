@@ -64,22 +64,23 @@ karaTubeApp
       if ($scope.currentSongIndex == index) {
         return;
       }
-      $scope.playlist.splice(index, 1);
-      if ($scope.nextSongIndex > index) {
-        $scope.nextSongIndex -= 1;
+      else {
+        $scope.playlist.splice(index, 1);
+        if ($scope.nextSongIndex > index) {
+          $scope.nextSongIndex -= 1;
+        }
+        if ($scope.currentSongIndex > index) {
+          $scope.currentSongIndex -= 1;
+        }
       }
-      $scope.setNextSongName();
+      $scope.$apply();
     }
 
-
     $scope.playNextSong = function() {
-      temp = $scope.currentSongIndex;
-      curr = $scope.nextSongIndex;
-      // $scope.currentSongIndex = $scope.nextSongIndex;
-      // $scope.removeSong(temp);
+      past = $scope.currentSongIndex;
       $scope.playSong($scope.nextSongIndex);
-      $scope.updateNextSong();
-      return curr;
+      $scope.removeSong(past);
+      return $scope.currentSongIndex;
     }
 
     getImgFromID = function(id) {
