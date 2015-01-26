@@ -35,7 +35,11 @@ karaTubeApp
       else {
         $scope.nextSongName = $scope.playlist[$scope.nextSongIndex].title;
       }
-      $scope.$apply();
+    }
+
+    $scope.getNextSongName = function() {
+      $scope.setNextSongName();
+      return $scope.nextSongName;
     }
 
     $scope.playSong = function(index) {
