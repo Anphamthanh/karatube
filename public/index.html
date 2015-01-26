@@ -66,7 +66,6 @@
     ga('create', 'UA-58841076-2', 'auto');
     ga('send', 'pageview');
 
-    var player; 
     var height = $("html").height()*0.81;
 
     $("#startSongInput").focus();
@@ -313,13 +312,13 @@
     YT_ready(function(){
       var frameID = getFrameID("player-frame");
       if (frameID) { //If the frame exists
-        player = new YT.Player(frameID, {
+        var player = new YT.Player(frameID, {
           id: 'qpgTC9MDx1o',
           events: {
             "onStateChange": videoStateChanged
           }
         });
-        console.log("Player is ready!");
+        $("body").scope().init(player);
       }
     });
 
@@ -328,13 +327,13 @@
         temp = $(".playing");
         temp.removeClass("playing");
         temp.next().addClass("playing");
-        $("body").scope().playNextSong(player);
+        $("body").scope().playNextSong();
       }
     }
 
     function addSong2Playlist(liObj) {
       playlistOn(); 
-      $("body").scope().addSong2Playlist(player, liObj);      
+      $("body").scope().addSong2Playlist(liObj);      
 
       $("#newSongInput").val("");
       $("#newSongInputSuggestion").empty();
@@ -347,7 +346,7 @@
       $(".playlist-item").click(function() {
         $(".playing").removeClass("playing");
         $(this).addClass("playing");
-        $("body").scope().playSong(player, $(this).data('index'));
+        $("body").scope().playSong($(this).data('index'));
       });
 
       $(".playlist-item").hover(function() {
@@ -376,7 +375,7 @@
         selectedSong = getSelectedItem("newSongInputSuggestion", "suggestion-item", "selected");
         addSong2Playlist(selectedSong);
       });
-      $("body").scope().addSong2Playlist(player, libObj);
+      $("body").scope().addSong2Playlist(libObj);
       $("#playlist .playlist-item").first().addClass("playing");
       setupPlaylistItemEffect();
     }

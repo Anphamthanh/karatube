@@ -6,15 +6,20 @@ karaTubeApp
     $scope.nextSongIndex = -1;
     $scope.shuffle = false;
     $scope.nextSongName = "Please add more songs to your playlist.";
+    $scope.player = null;
 
-    $scope.addSong2Playlist = function(player, liObj) {
+    $scope.init = function(player) {
+      $scope.player = player;
+    }
+
+    $scope.addSong2Playlist = function(liObj) {
       obj = { 'id': liObj.data('id'), 'img': getImgFromID(liObj.data('id')), 
         'title': liObj.data('title'), 
         'duration': liObj.data('duration'), 'uploader': liObj.data('uploader'), 
         'view': liObj.data('view') };
       $scope.playlist.push(obj);  
       if ($scope.playlist.length == 1) {
-        $scope.playSong(player, 0);
+        $scope.playSong(0);
       }
       else if ($scope.playlist.length == 2) {
         $scope.nextSongIndex = 1;
@@ -33,7 +38,7 @@ karaTubeApp
       $scope.$apply();
     }
 
-    $scope.playSong = function(player, index) {
+    $scope.playSong = function(index) {
       if (index < 0 || index >= $scope.playlist.length) {
         if ($scope.playlist.length != 0) {
           index = 0;
@@ -42,8 +47,8 @@ karaTubeApp
           return;
         }
       }
-      player.loadVideoById($scope.playlist[index].id);
-      player.playVideo();
+      $scope.player.loadVideoById($scope.playlist[index].id);
+      $scope.player.playVideo();
       $scope.currentSongIndex = index;
       $scope.updateNextSong();
     }
@@ -64,11 +69,11 @@ karaTubeApp
     }
 
 
-    $scope.playNextSong = function(player) {
+    $scope.playNextSong = function() {
       temp = $scope.currentSongIndex;
       $scope.currentSongIndex = $scope.nextSongIndex;
       $scope.removeSong(temp);
-      $scope.playSong(player, $scope.currentSongIndex);
+      $scope.playSong($scope.currentSongIndex);
       $scope.updateNextSong();
     }
 
