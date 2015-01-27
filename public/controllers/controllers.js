@@ -22,10 +22,7 @@ karaTubeApp
         $scope.playSong(0);
         $scope.nextSongIndex = -1;
       }
-      else {
-        $scope.updateNextSong();
-      }
-      $scope.$apply();
+      $scope.updateNextSong();
     }
 
     $scope.updateNextSong = function() {
@@ -47,12 +44,7 @@ karaTubeApp
 
     $scope.playSong = function(index) {
       if (index < 0 || index >= $scope.playlist.length) {
-        if ($scope.playlist.length != 0) {
-          index = 0;
-        }
-        else {
-          return;
-        }
+        return;
       }
       $scope.player.loadVideoById($scope.playlist[index].id);
       $scope.player.playVideo();
