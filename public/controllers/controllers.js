@@ -5,7 +5,7 @@ karaTubeApp
     $scope.currentSongIndex = -1;
     $scope.nextSongIndex = -1;
     $scope.shuffle = false;
-    $scope.nextSongName = "Please add more songs to your playlist.";
+    $scope.nextSongName = "";
     $scope.player = null;
 
     $scope.init = function(player) {
@@ -28,7 +28,7 @@ karaTubeApp
     $scope.updateNextSong = function() {
       if ($scope.playlist.length <= 1) {
         $scope.nextSongIndex = -1;
-        $scope.nextSongName = "Please add more song to your playlist.";
+        $scope.nextSongName = "Please add more songs to your playlist.";
       }
       else {
         if ($scope.shuffle == false) {
