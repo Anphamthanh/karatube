@@ -202,3 +202,25 @@ li.suggestion-item .suggestion-uploader
   font-size: 9pt;
   color: #06BD9B;
 }
+
+span.deleteicon {
+  position: relative;
+}
+
+span.deleteicon span {
+  position: relative;
+}
+
+span.deleteicon span:before {
+  position:absolute;
+  font-family: FontAwesome;
+  top: 0;
+  left: -20px;
+  content: "\F00D";
+  cursor: pointer;
+  color: #8EA3A0;
+}
+
+span.deleteicon input {
+  padding-right: 16px;
+}

@@ -19,12 +19,12 @@
   <div class="topbar">
     <p id="welcome-text">Welcome to KaraTube 0.1.0! YouTube Karaoke is now on a different level!...</p>
     <span id="song-input" class="right-corner hidden">
-      <input ng-model="newSongInput" type="text" id="newSongInput" placeholder="Please add your next song">
+      <input ng-model="newSongInput" type="text" id="newSongInput" class="deletable" placeholder="Please add your next song">
       <i class="btn fa fa-plus fa-2x add-btn" id="add-song-btn" title="Click to add song."></i>
     </span>
   </div>
   <span id="search-form">
-    <input ng-model="startSong" type="text" id="startSongInput" autocomplete="off" placeholder="Please enter your song">
+    <input ng-model="startSong" type="text" id="startSongInput" autocomplete="off" placeholder="Please enter your song" class="deletable">
     <ul id="startSongInputSuggestion"></ul>
   </span>
   <div id="main-wrapper">

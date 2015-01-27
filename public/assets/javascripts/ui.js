@@ -17,6 +17,11 @@ $("#startSongInput").focus();
 $("#player-frame").css("height", height);
 $("#user-control").css("height", height);
 
+$('input.deletable').wrap('<span class="deleteicon" />').after($('<span/>').click(function() {
+  $(this).prev('input').val('').focus();
+  playlistOn();
+}));
+
 $("#user-control").mouseenter(function() {
   showUserControl();
 });
