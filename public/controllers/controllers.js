@@ -73,7 +73,7 @@ karaTubeApp
           $scope.currentSongIndex -= 1;
         }
       }
-      $scope.$apply();
+      $scope.updateNextSong();
     }
 
     $scope.playNextSong = function() {
