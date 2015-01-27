@@ -11,16 +11,17 @@ m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
 ga('create', 'UA-58841076-2', 'auto');
 ga('send', 'pageview');
 
+$('input.deletable').wrap('<span class="deleteicon" />').after($('<span/>').click(function() {
+  $(this).prev('input').val('').focus();
+  playlistOn();
+}));
+
 var height = $("html").height()*0.81;
 
 $("#startSongInput").focus();
 $("#player-frame").css("height", height);
 $("#user-control").css("height", height);
 
-$('input.deletable').wrap('<span class="deleteicon" />').after($('<span/>').click(function() {
-  $(this).prev('input').val('').focus();
-  playlistOn();
-}));
 
 $("#user-control").mouseenter(function() {
   showUserControl();
