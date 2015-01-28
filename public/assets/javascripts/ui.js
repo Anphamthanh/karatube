@@ -321,7 +321,7 @@ function openPlayingPage(libObj) {
   $("#player-frame").removeClass("transparent");
   $("#user-control").removeClass("hidden");
   $("body").addClass("stripesDarkBackground");
-  $("#welcome-text").text("KaraTube 0.1.0");
+  $("#welcome-text").text("KaraTube 0.1.5");
   $("#song-input").removeClass("hidden");
   $(".info").removeClass("hidden");
   $("#newSongInput").focus();
