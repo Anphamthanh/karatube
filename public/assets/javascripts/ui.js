@@ -203,6 +203,7 @@ function updateSuggestion(searchInput, maxResult, suggestionDiv) {
         $("#newSongInputSuggestion li.suggestion-item").click(function() {
           addSong2Playlist($(this));
         });
+        setupNiceScroll();
       }
       else
       {
