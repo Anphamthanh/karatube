@@ -1,8 +1,9 @@
 require 'filewatcher'
+require 'uglifier'
 
 files = [
-  "../public/assets/javascripts/ui.js",
-  "../public/controllers/controllers.js"
+  "../public/assets/javascripts/ui.main.js",
+  "../public/controllers/controllers.main.js"
 ]
 
 files.each do |file|
@@ -12,5 +13,7 @@ files.each do |file|
 end
 
 FileWatcher.new(files).watch do |file_name|
-  puts "Changed #{file_name}"
+  puts "Changed in #{file_name}"
+  minified = Uglifier.compile(File.read(file_name))
+  File.write("#{file_name.sub('main.js','min.js')}", minified)
 end
