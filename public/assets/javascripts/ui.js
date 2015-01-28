@@ -21,6 +21,7 @@ var height = $("html").height()*0.85;
 $("#startSongInput").focus();
 $("#player-frame").css("height", height);
 $("#user-control").css("height", height);
+$(".item-container").css("height", height - 30);
 
 (function() {
   var s = document.createElement("script");
@@ -28,6 +29,15 @@ $("#user-control").css("height", height);
   var before = document.getElementsByTagName("script")[0];
   before.parentNode.insertBefore(s, before);
 })();
+
+$.fn.needVerticalScrollBar = function() {
+    var _elm = $(this)[0];
+    var _hasScrollBar = false; 
+    if ((_elm.clientHeight < _elm.scrollHeight)) {
+        _hasScrollBar = true;
+    }
+    return _hasScrollBar;
+}
 
 function showUserControl() {      
   $("#user-control").css("width", "30%");
@@ -195,6 +205,9 @@ function updateSuggestion(searchInput, maxResult, suggestionDiv) {
         $("#newSongInputSuggestion li.suggestion-item").click(function() {
           addSong2Playlist($(this));
         });
+        if($(".item-container").needVerticalScrollBar()) {
+          $(".item-container").niceScroll();
+        }
       }
       else
       {
@@ -281,6 +294,9 @@ function addSong2Playlist(liObj) {
   
   // Re-bind click event to new play playlist item
   setupPlaylistItemEffect();
+  if($(".item-container").needVerticalScrollBar()) {
+    $(".item-container").getNiceScroll().show();
+  }
 }
 
 function setupPlaylistItemEffect() {         

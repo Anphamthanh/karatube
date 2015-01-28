@@ -30,8 +30,6 @@ body {
   box-sizing: border-box;
   background-color: #1e1e1e;
   opacity: 0.9;
-  overflow-x: hidden;
-  overflow-y: scroll;
   position: absolute;
   top: 0;
   right: 0;
@@ -45,7 +43,7 @@ body {
 #player-frame {
   width: 70%;
   box-sizing: border-box;
-  border: 1px solid #95B5C2;
+  border: 1px solid #60706E;
 }
 
 .info {
@@ -224,4 +222,8 @@ span.deleteicon span:before {
 
 span.deleteicon input {
   padding-right: 16px;
+}
+
+.item-container {
+  outline: none;
 }

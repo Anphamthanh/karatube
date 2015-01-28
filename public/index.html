@@ -13,6 +13,7 @@
   <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.8/angular.min.js"></script>
   <script src="app.js"></script>
   <script src="controllers/controllers.js"></script>
+  <script src="assets/javascripts/jquery.nicescroll.min.js"></script>
 </head>
 
 <body ng-controller="MainCtrl">
@@ -31,19 +32,21 @@
     <iframe id="player-frame" class="transparent" frameborder="0" title="YouTube video player" type="text/html" src="//www.youtube.com/embed/qpgTC9MDx1o?enablejsapi=1" allowfullscreen="true"></iframe>
     <div id="user-control" class="hidden">
       <div id="control-wrapper">
-        <div id="control-title"><i class="fa fa-list"></i><span class="list-title">&nbsp;Play List</span></div>       
-        <ul id="newSongInputSuggestion" class="user-list hidden"></ul>
-        <ul id="playlist" class="user-list">
-          <li data-id="{{ item.id }}" data-index="{{ $index }}" class='playlist-item' ng-repeat="item in playlist">
-            <i class="btn fa fa-minus fa-2x remove-song-btn hidden" ng-click="removeSong($index)" title="Click to remove song."></i>
-            <img class='playlist-item-img' src=" {{ item.img }} ">
-            <span class='playlist-item-info'>
-              <div class='playlist-item-title'> {{ item.title }} </div>
-              <span class='playlist-item-uploader'> {{ item.uploader }} &nbsp;&nbsp;&nbsp;</span>
-              <span class='playlist-item-view'> {{ item.view }} views</span>
-            </span>
-          </li>
-        </ul>      
+        <div id="control-title"><i class="fa fa-list"></i><span class="list-title">&nbsp;Play List</span></div>
+        <div class="item-container">
+          <ul id="newSongInputSuggestion" class="user-list hidden"></ul>
+          <ul id="playlist" class="user-list">
+            <li data-id="{{ item.id }}" data-index="{{ $index }}" class='playlist-item' ng-repeat="item in playlist">
+              <i class="btn fa fa-minus fa-2x remove-song-btn hidden" ng-click="removeSong($index)" title="Click to remove song."></i>
+              <img class='playlist-item-img' src=" {{ item.img }} ">
+              <span class='playlist-item-info'>
+                <div class='playlist-item-title'> {{ item.title }} </div>
+                <span class='playlist-item-uploader'> {{ item.uploader }} &nbsp;&nbsp;&nbsp;</span>
+                <span class='playlist-item-view'> {{ item.view }} views</span>
+              </span>
+            </li>
+          </ul>      
+        </div>
       </div>
     </div>
   </div>  
