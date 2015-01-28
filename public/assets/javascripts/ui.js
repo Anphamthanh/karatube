@@ -74,6 +74,9 @@ $("#startSongInput").keyup(function(event) {
   }
 
   if (key == 13) {
+    if ($(this).val() == "") {
+      return;
+    }
     selectedSong = getSelectedItem("startSongInputSuggestion", "suggestion-item", "selected");
     openPlayingPage(selectedSong);
     return;
@@ -102,6 +105,9 @@ $("#newSongInput").keyup(function(event) {
   }
 
   if (key == 13) { 
+    if ($(this).val() == "") {
+      return;
+    }
     selectedSong = getSelectedItem("newSongInputSuggestion", "suggestion-item", "selected");
     addSong2Playlist(selectedSong);
     return;
