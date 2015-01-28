@@ -1,3 +1,9 @@
+/*!*************************************
+* KaraTube - YouTube Karaoke Made easy
+* Author An Pham
+* http://www.apresume.com
+* All rights reserved 2015
+***************************************/
 
 karaTubeApp
 .controller('MainCtrl', ['$scope', function($scope) {
