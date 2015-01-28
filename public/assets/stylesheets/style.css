@@ -32,6 +32,8 @@ body {
   opacity: 0.9;
   position: absolute;
   top: 0;
+  border: 1px solid #60706E;
+  border-left: none;
   right: 0;
 }
 
@@ -224,6 +226,7 @@ span.deleteicon input {
   padding-right: 16px;
 }
 
-.item-container {
+#playlist-container {
   outline: none;
+  display: block;
 }

@@ -13,7 +13,7 @@ var height = $("html").height()*0.85;
 $("#startSongInput").focus();
 $("#player-frame").css("height", height);
 $("#user-control").css("height", height);
-$(".item-container").css("height", height - 30);
+$("#playlist-container").css("height", height - 30);
 
 (function() {
   var s = document.createElement("script");
@@ -197,9 +197,6 @@ function updateSuggestion(searchInput, maxResult, suggestionDiv) {
         $("#newSongInputSuggestion li.suggestion-item").click(function() {
           addSong2Playlist($(this));
         });
-        if($(".item-container").needVerticalScrollBar()) {
-          $(".item-container").niceScroll();
-        }
       }
       else
       {
@@ -286,9 +283,13 @@ function addSong2Playlist(liObj) {
   
   // Re-bind click event to new play playlist item
   setupPlaylistItemEffect();
-  if($(".item-container").needVerticalScrollBar()) {
-    $(".item-container").getNiceScroll().show();
-  }
+  setupNiceScroll();
+}
+
+function setupNiceScroll() {
+  if($("#playlist-container").needVerticalScrollBar()) {
+    $("#playlist-container").getNiceScroll().resize();
+  }  
 }
 
 function setupPlaylistItemEffect() {         
@@ -316,6 +317,7 @@ function openPlayingPage(libObj) {
   $("#welcome-text").text("KaraTube 0.1.5");
   $("#song-input").removeClass("hidden");
   $(".info").removeClass("hidden");
+  $("#playlist-container").niceScroll();
   $("#newSongInput").focus();
   $("#add-song-btn").click(function() {
     selectedSong = getSelectedItem("newSongInputSuggestion", "suggestion-item", "selected");
