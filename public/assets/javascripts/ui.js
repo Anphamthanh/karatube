@@ -16,20 +16,11 @@ $('input.deletable').wrap('<span class="deleteicon" />').after($('<span/>').clic
   playlistOn();
 }));
 
-var height = $("html").height()*0.81;
+var height = $("html").height()*0.85;
 
 $("#startSongInput").focus();
 $("#player-frame").css("height", height);
 $("#user-control").css("height", height);
-
-
-$("#user-control").mouseenter(function() {
-  showUserControl();
-});
-
-$("#user-control").mouseleave(function() {
-  hideUserControl();
-});
 
 (function() {
   var s = document.createElement("script");
@@ -318,9 +309,6 @@ function openPlayingPage(libObj) {
   $("#song-input").removeClass("hidden");
   $(".info").removeClass("hidden");
   $("#newSongInput").focus();
-  setTimeout(function() {
-    $("#user-control").trigger("mouseleave");
-  }, 1000);
   $("#add-song-btn").click(function() {
     selectedSong = getSelectedItem("newSongInputSuggestion", "suggestion-item", "selected");
     addSong2Playlist(selectedSong);
