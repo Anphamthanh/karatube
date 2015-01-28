@@ -1,8 +1,16 @@
 require 'filewatcher'
 
-puts File.exist?("../public/assets/javascripts/ui.js")
-puts File.exist?("../public/controllers/controllers.js")
+files = [
+  "../public/assets/javascripts/ui.js",
+  "../public/controllers/controllers.js"
+]
 
-FileWatcher.new(["../public/assets/javascripts/ui.js", "../public/controllers/controllers.js"]).watch do |file_name|
+files.each do |file|
+  unless File.exist?(file)
+    puts "File #{file} does not exist."
+  end 
+end
+
+FileWatcher.new(files).watch do |file_name|
   puts "Changed #{file_name}"
 end
